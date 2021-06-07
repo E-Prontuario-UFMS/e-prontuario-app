@@ -1,0 +1,2 @@
+export const SET_GLOBAL_USER = "USER/SET_GLOBAL";
+export const DELETE_GLOBAL_USER = "USER/DELETE_USER";

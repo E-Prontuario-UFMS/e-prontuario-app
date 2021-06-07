@@ -1,0 +1,7 @@
+export const ADD_PACIENTE = "PACIENTE/ADD";
+export const GET_PACIENTES = "PACIENTE/GET_ALL";
+export const EDIT_PACIENTES = "PACIENTE/EDIT";
+export const REMOVE_PACIENTE = "PACIENTE/REMOVE";
+
+export const SET_PAGE = "PACIENTE/SET_PAGE";
+export const SET_LIMIT = "PACIENTE/SET_LIMIT";
