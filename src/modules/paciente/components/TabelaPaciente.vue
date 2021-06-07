@@ -56,15 +56,21 @@
               </template>
 
               <template v-slot:item.actions="{ item }">
-                <v-icon class="mr-2" small>
-                  mdi-arrow-right
-                </v-icon>
-                <v-icon class="mr-2" small @click="acessarPaciente(item)">
-                  mdi-pencil
-                </v-icon>
-                <v-icon small class="mr-2" @click="deleteItem(item)">
-                  mdi-delete
-                </v-icon>
+                <v-btn class="ml-2" @click="goTo(`paciente/${item.id}`)" icon>
+                  <v-icon class="ml-2" small>
+                    mdi-arrow-right
+                  </v-icon>
+                </v-btn>
+                <v-btn class="ml-2" @click="acessarPaciente(item)" icon>
+                  <v-icon small>
+                    mdi-pencil
+                  </v-icon>
+                </v-btn>
+                <v-btn class="ml-2" @click="deleteItem(item)" icon>
+                  <v-icon small>
+                    mdi-delete
+                  </v-icon>
+                </v-btn>
               </template>
               <template v-slot:no-data>
                 Sem itens
@@ -105,8 +111,10 @@
 <script>
   import { mapActions, mapState } from "vuex";
   import { removePaciente } from "@/modules/paciente/services";
+  import { routerMixin } from "../../../mixins";
 
   export default {
+    mixins: [routerMixin],
     data: () => ({
       alert: {
         active: false,
@@ -169,7 +177,7 @@
       getFormattedCpf(cpf) {
         return `${cpf.substring(0, 3)}.${cpf.substring(3, 6)}.${cpf.substring(
           6,
-          9
+          9,
         )}.${cpf.substring(9, 11)}`;
       },
 

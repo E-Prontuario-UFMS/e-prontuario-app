@@ -14,4 +14,9 @@ export default [
     name: "Professor",
     component: () => import("./pages/Professor.vue"),
   },
+  {
+    path: "/editar-professor/:id",
+    name: "EditarProfessor",
+    component: () => import("./pages/EditarProfessor.vue"),
+  },
 ];

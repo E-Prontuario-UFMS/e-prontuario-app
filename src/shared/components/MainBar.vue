@@ -101,7 +101,7 @@
             break;
 
           case 2:
-            this.$router.replace({ name: "Paciente" });
+            this.$router.replace({ name: "Pacientes" });
             break;
 
           case 3:

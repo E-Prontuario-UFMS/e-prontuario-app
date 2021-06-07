@@ -15,7 +15,7 @@
             <div style="float: right">
               <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn icon @click="goTo(`/professor/${item.id}`)">
+                  <v-btn icon @click="goTo(`/home/disciplina/${item.id}`)">
                     <v-icon color="primary" dark v-bind="attrs" v-on="on">
                       mdi-arrow-right
                     </v-icon>
@@ -57,8 +57,9 @@
 <script>
   import EOverlay from "../../../shared/components/EOverlay.vue";
   import { getDisciplinas } from "../../disciplina/services";
-
+  import { routerMixin } from "@/mixins";
   export default {
+    mixins: [routerMixin],
     components: { EOverlay },
     data: () => ({
       headers: [

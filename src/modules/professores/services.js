@@ -19,3 +19,9 @@ export async function deleteProfessor(id) {
 export async function getProfessorById(id) {
   return await axios.get(`${BASE_URL}/professor/${id}`);
 }
+
+export async function updateProfessor(professor) {
+  return await axios.put(`${BASE_URL}/professor/${professor.id}`, {
+    ...professor,
+  });
+}

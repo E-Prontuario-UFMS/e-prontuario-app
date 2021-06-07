@@ -12,6 +12,9 @@
 
   export default {
     components: { CustomFooter },
+    mounted() {
+      document.title = "E-Prontuario";
+    },
   };
 </script>
 

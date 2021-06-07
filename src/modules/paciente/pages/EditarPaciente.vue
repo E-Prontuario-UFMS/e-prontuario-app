@@ -57,18 +57,18 @@
           </div>
         </div>
       </v-form>
-      <v-overlay :value="loading">
-        <v-progress-circular indeterminate size="64"></v-progress-circular>
-      </v-overlay>
     </v-card>
+    <e-overlay :loading="loading"></e-overlay>
   </v-container>
 </template>
 
 <script>
   import { mapActions, mapState } from "vuex";
   import { getPacienteFromId } from "@/modules/paciente/services/getPacienteFromId";
+  import EOverlay from "../../../shared/components/EOverlay.vue";
 
   export default {
+    components: { EOverlay },
     data: () => ({
       alert: {
         active: false,
@@ -118,15 +118,18 @@
     },
     mounted() {
       this.id = this.$route.params.id;
+      this.loading = true;
       getPacienteFromId(this.id)
         .then(data => {
           this.nome = data.nome;
           this.cpf = data.cpf;
           this.genero = data.genero;
+          this.loading = false;
         })
         .catch(err => {
           this.alert.active = true;
           this.alert.message = err.message;
+          this.loading = false;
         });
     },
   };

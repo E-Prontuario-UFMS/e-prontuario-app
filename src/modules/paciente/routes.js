@@ -1,8 +1,8 @@
 export default [
   {
-    path: "paciente",
-    name: "Paciente",
-    component: () => import("./pages/Paciente"),
+    path: "pacientes",
+    name: "Pacientes",
+    component: () => import("./pages/Pacientes"),
   },
   {
     path: "paciente/novo-paciente",
@@ -13,5 +13,10 @@ export default [
     path: "paciente/editar-paciente/:id",
     name: "EditarPaciente",
     component: () => import("./pages/EditarPaciente"),
+  },
+  {
+    path: "paciente/:id",
+    name: "Paciente",
+    component: () => import("./pages/Paciente.vue"),
   },
 ];

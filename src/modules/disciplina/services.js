@@ -14,3 +14,7 @@ export async function addNewDisciplina({ descricao, titulo, professor }) {
 export async function getDisciplinas({ page = 0 }) {
   return await axios.get(`${BASE_URL}/disciplina?page=${page}`);
 }
+
+export async function fetchDisciplinaById(id) {
+  return await axios.get(`${BASE_URL}/disciplina/${id}`);
+}

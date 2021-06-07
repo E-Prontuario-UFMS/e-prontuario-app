@@ -1,6 +1,7 @@
 <template>
-  <v-container
-    ><v-tabs v-model="tab" ve>
+  <v-container>
+    <e-title route="/configuracoes" title="Disciplinas"></e-title>
+    <v-tabs v-model="tab" class="mt-5">
       <v-tab :disabled="usuario.role !== `PROFESSOR`">{{
         this.tabTitle[0]
       }}</v-tab>
@@ -24,8 +25,9 @@
   import { mapState } from "vuex";
   import CadastrarDisciplina from "../components/CadastrarDisciplina.vue";
   import DisciplinasCadastradas from "../components/DisciplinasCadastradas.vue";
+  import ETitle from "@/shared/components/ETitle";
   export default {
-    components: { CadastrarDisciplina, DisciplinasCadastradas },
+    components: { CadastrarDisciplina, DisciplinasCadastradas, ETitle },
     data: () => ({
       tab: null,
       tabTitle: ["Disciplinas Cadastradas", "Cadastrar Disciplinas"],

@@ -60,7 +60,7 @@
       loading: false,
       nameRules: [
         v => !!v || "Nome não pode ser vazio",
-        v => v.length >= 10 || "Nome precisa ter mais do que 10 caracteres",
+        v => v.length >= 2 || "Nome precisa ter mais do que 2 caracteres",
       ],
       autoCompleteRules: [v => !!v || "Necessário ter um professor"],
       descricaoRules: [v => !!v || "Descrição não pode ser vazia"],
@@ -80,12 +80,11 @@
       },
       async handleAddNewDisciplina() {
         this.$refs.form.validate();
-        const response = await addNewDisciplina({
+        await addNewDisciplina({
           descricao: this.descricao,
           titulo: this.nome,
           professor: this.professorAutoComplete,
         });
-        console.log(response);
         this.$refs.form.reset();
       },
     },

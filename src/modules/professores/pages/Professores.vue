@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row class="mt-5">
-      <v-btn icon class="mr-5" @click="goBack()">
+      <v-btn icon class="mr-5" @click="goTo('/configuracoes')">
         <v-icon>
           mdi-arrow-left
         </v-icon>
@@ -41,7 +41,7 @@
 
                 <v-tooltip top>
                   <template v-slot:activator="{ on, attrs }">
-                    <v-btn icon>
+                    <v-btn icon @click="goTo(`/editar-professor/${item.id}`)">
                       <v-icon color="warning" dark v-bind="attrs" v-on="on">
                         mdi-pencil
                       </v-icon>
