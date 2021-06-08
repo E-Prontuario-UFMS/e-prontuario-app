@@ -9,4 +9,9 @@ export default [
     name: "ConfiguracoesDisciplinas",
     component: () => import("./pages/Disciplinas.vue"),
   },
+  {
+    path: "/configuracoes/disciplina/:id",
+    name: "EditarDisciplina",
+    component: () => import("./components/EditarDisciplina.vue"),
+  },
 ];

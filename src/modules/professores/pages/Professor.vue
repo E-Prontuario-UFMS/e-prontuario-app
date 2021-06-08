@@ -33,6 +33,7 @@
     mounted() {
       this.handleGetProfessorById();
     },
+    // TODO: Verificar se existe a possibilidade de buscar as disciplinas pertencentes a esse professor
   };
 </script>
 

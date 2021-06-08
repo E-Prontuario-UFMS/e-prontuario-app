@@ -26,7 +26,10 @@
 
               <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn icon>
+                  <v-btn
+                    icon
+                    @click="goTo(`/configuracoes/disciplina/${item.id}`)"
+                  >
                     <v-icon color="warning" dark v-bind="attrs" v-on="on">
                       mdi-pencil
                     </v-icon>

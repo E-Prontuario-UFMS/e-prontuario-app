@@ -1,6 +1,9 @@
 <template>
   <v-container>
-    <e-title :title="disciplina.titulo" route="/home/disciplinas"></e-title>
+    <e-title
+      :title="disciplina.titulo"
+      route="/configuracoes/disciplinas"
+    ></e-title>
     <v-card class="my-5" v-if="!loading">
       <v-card-title>
         Responsavel: {{ disciplina.professorPojo.nome }}

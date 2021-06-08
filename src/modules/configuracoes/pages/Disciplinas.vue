@@ -2,9 +2,7 @@
   <v-container>
     <e-title route="/configuracoes" title="Disciplinas"></e-title>
     <v-tabs v-model="tab" class="mt-5">
-      <v-tab :disabled="usuario.role !== `PROFESSOR`">{{
-        this.tabTitle[0]
-      }}</v-tab>
+      <v-tab>{{ this.tabTitle[0] }}</v-tab>
       <v-tab :disabled="usuario.role !== `PROFESSOR`">{{
         this.tabTitle[1]
       }}</v-tab>

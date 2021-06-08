@@ -18,3 +18,9 @@ export async function getDisciplinas({ page = 0 }) {
 export async function fetchDisciplinaById(id) {
   return await axios.get(`${BASE_URL}/disciplina/${id}`);
 }
+
+export async function putDisciplina(disciplina) {
+  return await axios.put(`${BASE_URL}/disciplina/${disciplina.id}`, {
+    disciplina,
+  });
+}

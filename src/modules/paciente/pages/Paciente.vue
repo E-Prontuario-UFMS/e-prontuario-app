@@ -36,6 +36,7 @@
         this.loading = false;
       },
     },
+    // TODO: Verificar se tem a possibilidade de retornar todos os documentos associados a este paciente.
     mounted() {
       this.getPacienteById();
     },

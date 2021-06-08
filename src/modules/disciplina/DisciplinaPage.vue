@@ -1,9 +1,11 @@
 <template>
-  <v-container> </v-container>
+  <disciplinas></disciplinas>
 </template>
 
 <script>
+  import Disciplinas from "../configuracoes/pages/Disciplinas.vue";
   export default {
+    components: { Disciplinas },
     name: "DisciplinaPage",
     data: () => ({
       disciplinas: [],

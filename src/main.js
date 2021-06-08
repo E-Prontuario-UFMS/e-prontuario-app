@@ -7,6 +7,8 @@ import "es6-promise/auto";
 import store from "./store";
 import Axios from "axios";
 import VueDateFns from "vue-date-fns";
+import * as Sentry from "@sentry/vue";
+import { Integrations } from "@sentry/tracing";
 
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -32,11 +34,19 @@ Axios.interceptors.request.use(
   function(err) {
     window.location.href = "/login";
     return Promise.reject(err);
-  }
+  },
 );
 
 Vue.config.productionTip = false;
 Vue.use(VueDateFns);
+
+Sentry.init({
+  Vue,
+  dsn: process.env.VUE_APP_SENTY_TOKEN,
+  integrations: [new Integrations.BrowserTracing()],
+  tracesSampleRate: 1.0,
+});
+
 new Vue({
   vuetify,
   router,
