@@ -39,6 +39,11 @@
             </v-list-item-title>
           </v-list-item>
           <v-list-item v-if="isProfessor">
+            <v-list-item-title>
+              Matriculas
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item v-if="isProfessor">
             <v-list-item-title>Configurações </v-list-item-title>
           </v-list-item>
           <v-list-item @click="doLogout">
@@ -109,10 +114,14 @@
             break;
 
           case 4:
-            this.$router.replace("/configuracoes");
+            this.$router.replace("/matriculas");
             break;
 
           case 5:
+            this.$router.replace("/configuracoes");
+            break;
+
+          case 6:
             this.doLogout();
             break;
           default:

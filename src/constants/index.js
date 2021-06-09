@@ -6,3 +6,5 @@ export const EM_USO = "EM_USO";
 export const EXCLUIDO = "EXCLUIDO";
 export const ATIVO = "ATIVO";
 export const INATIVO = "INATIVO";
+
+export const ACADEMICO = "ACADEMICO";

@@ -1,11 +1,6 @@
 <template>
   <v-container>
-    <v-row class="ma-5">
-      <v-btn icon class="mr-5" @click="goBack()">
-        <v-icon>mdi-arrow-left</v-icon>
-      </v-btn>
-      <h2>Academicos</h2>
-    </v-row>
+    <e-title title="Academicos" route="/configuracoes"></e-title>
     <v-row class="pa-5">
       <v-col align="end">
         <v-btn color="success" @click="goTo('novo-academico')">
@@ -29,7 +24,7 @@
               <div style="float: right">
                 <v-tooltip top>
                   <template v-slot:activator="{ on, attrs }">
-                    <v-btn icon @click="goTo(`/professor/${item.id}`)">
+                    <v-btn icon @click="goTo(`/academico/${item.id}`)">
                       <v-icon color="primary" dark v-bind="attrs" v-on="on">
                         mdi-arrow-right
                       </v-icon>
@@ -71,7 +66,9 @@
 <script>
   import { getAcademicos } from "../services";
   import routerMixin from "@/mixins/router.mixin";
+  import ETitle from "../../../shared/components/ETitle.vue";
   export default {
+    components: { ETitle },
     mixins: [routerMixin],
     data: () => ({
       page: 1,
@@ -83,13 +80,18 @@
           text: "RGA",
           value: "rga",
         },
+        {
+          text: "Ações",
+          value: "acoes",
+        },
       ],
       loading: false,
     }),
     methods: {
       async loadAcademicos() {
         const { data } = await getAcademicos({ page: this.page - 1 });
-        this.academicosPaginations = data;
+        console.log(data);
+        this.academicosPagination = data;
       },
       async handleDeleteAcademico(academico) {
         console.log(academico);

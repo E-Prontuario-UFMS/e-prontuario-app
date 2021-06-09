@@ -79,7 +79,6 @@
       async loadDisciplinas() {
         this.loading = true;
         const { data } = await getDisciplinas({ page: this.page - 1 });
-        console.log(data);
         this.disciplinasPagination = data;
         this.loading = false;
       },

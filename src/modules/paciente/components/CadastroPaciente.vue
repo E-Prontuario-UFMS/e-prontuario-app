@@ -8,12 +8,7 @@
 
     <v-card elevation="10" class="pa-4" style="padding: 10px;">
       <v-card-text class="pl-0"><strong>Novo Paciente</strong></v-card-text>
-      <v-form
-        lazy-validation
-        v-model="valid"
-        ref="form"
-        @submit.prevent="salvar"
-      >
+      <v-form v-model="valid" ref="form" @submit.prevent="salvar">
         <v-text-field
           label="Nome"
           v-model="nome"
@@ -52,13 +47,19 @@
           </div>
 
           <div class="col-md-10">
-            <v-btn color="success" @click="salvarESair" style="float: right;">
+            <v-btn
+              color="success"
+              :disabled="!valid"
+              @click="salvarESair"
+              style="float: right;"
+            >
               Salvar
             </v-btn>
 
             <v-btn
               class="mr-1"
               color="success"
+              :disabled="!valid"
               @click="salvar"
               style="float: right;"
               outlined
@@ -88,7 +89,7 @@
       nome: "",
       cpf: "",
       genero: null,
-      valid: true,
+      valid: false,
       loading: false,
       rules: {
         nome: [val => (val || "").length > 0 || "Nome não pode ser vazio"],

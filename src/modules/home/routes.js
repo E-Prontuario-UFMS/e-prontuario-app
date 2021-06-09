@@ -4,6 +4,7 @@ import { routes as disciplina } from "../disciplina";
 import { routes as professores } from "../professores";
 import { routes as configuracoes } from "../configuracoes";
 import { routes as academicos } from "../academicos";
+import { routes as matriculas } from "../matriculas";
 
 export default [
   {
@@ -17,6 +18,7 @@ export default [
       ...professores,
       ...configuracoes,
       ...academicos,
+      ...matriculas,
       {
         path: "/",
         name: "Home",
