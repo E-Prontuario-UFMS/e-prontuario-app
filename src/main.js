@@ -12,6 +12,7 @@ import { Integrations } from "@sentry/tracing";
 
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { isAValidToken } from "./store/jwtDecode";
 
 Vue.$http = new Axios.create({
   baseURL: "http://localhost:8080/eprontuario-api",
@@ -27,12 +28,18 @@ Axios.interceptors.request.use(
   function(config) {
     const token = store.state.login.token;
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      try {
+        isAValidToken(token);
+      } catch (e) {
+        localStorage.removeItem("vuex");
+        window.location.href = "/";
+      }
     }
+    config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
   function(err) {
-    window.location.href = "/login";
+    window.location.href = "/";
     return Promise.reject(err);
   },
 );
