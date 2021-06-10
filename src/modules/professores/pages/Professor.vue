@@ -6,6 +6,8 @@
       </v-btn>
       <h2>{{ professor.nome }}</h2>
     </v-row>
+
+    <v-row> </v-row>
     <e-overlay :loading="loading"></e-overlay>
   </v-container>
 </template>

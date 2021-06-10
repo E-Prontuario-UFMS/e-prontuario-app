@@ -12,3 +12,10 @@ export async function addAcademico({ nome, rga }) {
     tipoPessoa: ACADEMICO,
   });
 }
+export async function fetchAcademicoById(id) {
+  return await axios.get(`${BASE_URL}/academico/${id}`);
+}
+
+export async function fetchAllAcademicos() {
+  return await axios.get(`${BASE_URL}/academico/todos-academicos`);
+}

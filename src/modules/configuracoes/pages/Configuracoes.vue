@@ -13,7 +13,7 @@
         width="500"
         hover
         ripple
-        @click="goTo('professores')"
+        @click="goTo('/professores')"
       >
         <v-card-title>Professores</v-card-title>
         <v-card-subtitle>Cadastrar e remover</v-card-subtitle> </v-card
@@ -23,7 +23,7 @@
         width="500"
         hover
         ripple
-        @click="goTo('/academico')"
+        @click="goTo('/academicos')"
       >
         <v-card-title>Academicos</v-card-title>
         <v-card-subtitle>Cadastrar e Remover</v-card-subtitle> </v-card

@@ -24,3 +24,7 @@ export async function putDisciplina(disciplina) {
     disciplina,
   });
 }
+
+export async function fetchAllDisciplinas() {
+  return await axios.get(`${BASE_URL}/disciplina/todas-disciplinas`);
+}

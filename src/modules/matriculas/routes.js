@@ -4,4 +4,9 @@ export default [
     name: "Matriculas",
     component: () => import("./pages/Matriculas.vue"),
   },
+  {
+    path: "/nova-matricula",
+    name: "NovaMatricula",
+    component: () => import("./pages/NovaMatricula.vue"),
+  },
 ];
