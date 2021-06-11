@@ -4,8 +4,8 @@
       <v-btn icon @click="goBack" class="mr-5">
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
-      <h2>Configurações</h2></v-row
-    >
+      <h2>Configurações</h2>
+    </v-row>
     <v-row class="mt-5 pa-5">
       <v-card
         elevation="2"
@@ -16,8 +16,9 @@
         @click="goTo('/professores')"
       >
         <v-card-title>Professores</v-card-title>
-        <v-card-subtitle>Cadastrar e remover</v-card-subtitle> </v-card
-      ><v-card
+        <v-card-subtitle>Cadastrar e remover</v-card-subtitle>
+      </v-card>
+      <v-card
         elevation="2"
         class="m-2"
         width="500"
@@ -26,8 +27,9 @@
         @click="goTo('/academicos')"
       >
         <v-card-title>Academicos</v-card-title>
-        <v-card-subtitle>Cadastrar e Remover</v-card-subtitle> </v-card
-      ><v-card
+        <v-card-subtitle>Cadastrar e Remover</v-card-subtitle>
+      </v-card>
+      <v-card
         elevation="2"
         class="m-2"
         width="500"
@@ -36,6 +38,17 @@
         @click="goTo('configuracoes/disciplinas')"
       >
         <v-card-title>Disciplinas</v-card-title>
+        <v-card-subtitle>Cadastrar e remover</v-card-subtitle>
+      </v-card>
+      <v-card
+        elevation="2"
+        class="m-2"
+        width="500"
+        hover
+        ripple
+        @click="goTo('matriculas')"
+      >
+        <v-card-title>Matriculas</v-card-title>
         <v-card-subtitle>Cadastrar e remover</v-card-subtitle>
       </v-card>
     </v-row>
