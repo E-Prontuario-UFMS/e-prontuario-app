@@ -54,7 +54,7 @@
 
           <v-btn
             color="primary"
-            @click="e1 = 2"
+            @click="goToStepThree"
             :disabled="!(tituloDocumento && descricaoDocumento)"
           >
             Continuar
@@ -331,8 +331,10 @@
 <script>
   import { mapActions } from "vuex";
   import { formToApi } from "../services/formToApi";
-
+  import { createModeloDocumento } from "../services";
+  import { loadingMixin } from "@/mixins";
   export default {
+    mixins: [loadingMixin],
     data: () => ({
       dialog: false,
       e1: 1,
@@ -475,6 +477,23 @@
           tipoCampo: 0,
           descricao: "",
         };
+      },
+
+      async goToStepThree() {
+        try {
+          await this.handleCreateModeloDocumento();
+        } catch (e) {
+          this.snackbar = true;
+          return;
+        }
+        this.e1 = 2;
+      },
+
+      async handleCreateModeloDocumento() {
+        const { tituloDocumento: titulo, descricaoDocumento: descricao } = this;
+        this.startLoading();
+        await createModeloDocumento({ titulo, descricao });
+        this.stopLoading();
       },
 
       async validarESalvarModelo() {
