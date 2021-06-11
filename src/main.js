@@ -12,7 +12,7 @@ import { Integrations } from "@sentry/tracing";
 
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { isAValidToken } from "./store/jwtDecode";
+import { isAValidToken } from "./utils/jwtDecode";
 
 Vue.$http = new Axios.create({
   baseURL: "http://localhost:8080/eprontuario-api",
