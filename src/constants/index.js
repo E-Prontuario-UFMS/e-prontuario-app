@@ -22,3 +22,10 @@ export const DOCUMENT_TYPES = {
   BOOLEAN: "BOOLEAN",
   NUMBER: "NUMBER",
 };
+
+export const DISCIPLINAS = "disciplinas";
+export const PROFESSORES = "professores";
+export const DOCUMENTOS = "documentos";
+export const MODELOS = "modelos";
+export const PACIENTES = "pacientes";
+export const ACADEMICOS = "academicos";

@@ -113,10 +113,11 @@
 
 <script>
   import { mapState } from "vuex";
-  import { db } from "../../../firebase";
+  import { efireMixin } from "@/mixins";
 
   export default {
     name: "TabelaDocumento",
+    mixins: [efireMixin],
     data: () => ({
       headers: [],
       search: "",
@@ -160,9 +161,6 @@
           },
         ];
       },
-    },
-    firestore: {
-      documentos: db.collection("modelos"),
     },
   };
 </script>

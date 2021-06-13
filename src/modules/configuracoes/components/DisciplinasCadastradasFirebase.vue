@@ -2,9 +2,8 @@
   <v-container>
     <v-data-table
       :headers="headers"
-      :items="disciplinasPagination.content"
+      :items="disciplinas"
       :options.sync="options"
-      :server-items-length.sync="disciplinasPagination.totalElements"
       :loading="loading"
       :page.sync="page"
       class="elevation-1"
@@ -59,32 +58,33 @@
 
 <script>
   import EOverlay from "../../../shared/components/EOverlay.vue";
-  import { getDisciplinas } from "../../disciplina/services";
-  import { routerMixin } from "@/mixins";
+  import { routerMixin, efireMixin } from "@/mixins";
+  import { db } from "../../../firebase";
+  import { DISCIPLINAS } from "../../../constants";
   export default {
-    mixins: [routerMixin],
+    mixins: [routerMixin, efireMixin],
     components: { EOverlay },
     data: () => ({
       headers: [
-        { text: "Nome", value: "titulo" },
-        { text: "Professor", value: "professorPojo.nome" },
+        { text: "Nome", value: "nome" },
         { text: "Ações", value: "acoes" },
       ],
-      disciplinasPagination: {},
       loading: false,
       page: 1,
       options: {},
     }),
     methods: {
-      async loadDisciplinas() {
-        this.loading = true;
-        const { data } = await getDisciplinas({ page: this.page - 1 });
-        this.disciplinasPagination = data;
-        this.loading = false;
+      async handleDeleteDisciplina(item) {
+        await db
+          .collection(DISCIPLINAS)
+          .doc(item.id)
+          .delete()
+          .then(data => console.log(data))
+          .catch(err => console.error(err));
       },
     },
     mounted() {
-      this.loadDisciplinas();
+      console.log(this.disciplinas);
     },
   };
 </script>

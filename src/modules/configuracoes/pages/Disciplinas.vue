@@ -10,22 +10,27 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item>
-        <disciplinas-cadastradas></disciplinas-cadastradas>
+        <disciplinas-cadastradas-firebase></disciplinas-cadastradas-firebase>
       </v-tab-item>
       <v-tab-item>
-        <cadastrar-disciplina></cadastrar-disciplina>
-      </v-tab-item> </v-tabs-items
-  ></v-container>
+        <cadastrar-disciplina-firebase></cadastrar-disciplina-firebase>
+      </v-tab-item>
+    </v-tabs-items>
+  </v-container>
 </template>
 
 <script>
   // TODO: verificar se está atualizando conforme crio novas disciplinas
   import { mapState } from "vuex";
-  import CadastrarDisciplina from "../components/CadastrarDisciplina.vue";
-  import DisciplinasCadastradas from "../components/DisciplinasCadastradas.vue";
+  import CadastrarDisciplinaFirebase from "../components/CadastrarDisciplinaFirebase.vue";
+  import DisciplinasCadastradasFirebase from "../components/DisciplinasCadastradasFirebase.vue";
   import ETitle from "@/shared/components/ETitle";
   export default {
-    components: { CadastrarDisciplina, DisciplinasCadastradas, ETitle },
+    components: {
+      CadastrarDisciplinaFirebase,
+      DisciplinasCadastradasFirebase,
+      ETitle,
+    },
     data: () => ({
       tab: null,
       tabTitle: ["Disciplinas Cadastradas", "Cadastrar Disciplinas"],

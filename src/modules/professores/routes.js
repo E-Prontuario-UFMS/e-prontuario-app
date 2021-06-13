@@ -2,21 +2,21 @@ export default [
   {
     path: "/professores",
     name: "Professores",
-    component: () => import("./pages/Professores.vue"),
+    component: () => import("./pages/ProfessoresFirebase.vue"),
   },
   {
     path: "/novo-professor",
     name: "NovoProfessor",
-    component: () => import("./pages/NewProfessor.vue"),
+    component: () => import("./pages/NewProfessorFirebase.vue"),
   },
   {
     path: "/professor/:id",
     name: "Professor",
-    component: () => import("./pages/Professor.vue"),
+    component: () => import("./pages/ProfessorFirebase.vue"),
   },
   {
     path: "/editar-professor/:id",
     name: "EditarProfessor",
-    component: () => import("./pages/EditarProfessor.vue"),
+    component: () => import("./pages/EditarProfessorFirebase.vue"),
   },
 ];

@@ -8,7 +8,7 @@
       </v-btn>
       <v-spacer></v-spacer>
 
-      <auto-complete-input></auto-complete-input>
+      <auto-complete-input-firebase></auto-complete-input-firebase>
       <switch-theme />
     </v-app-bar>
 
@@ -57,13 +57,13 @@
 
 <script>
   import SwitchTheme from "./SwitchTheme.vue";
-  import AutoCompleteInput from "./AutoCompleteInput";
   import { mapActions, mapState } from "vuex";
+  import AutoCompleteInputFirebase from "./AutoCompleteInputFirebase.vue";
 
   export default {
     components: {
       SwitchTheme,
-      AutoCompleteInput,
+      AutoCompleteInputFirebase,
     },
     data: () => ({
       drawer: true,
