@@ -9,7 +9,7 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item>
-        <tabela-documento></tabela-documento>
+        <tabela-documento-firebase></tabela-documento-firebase>
       </v-tab-item>
       <v-tab-item>
         <documentos-preenchidos></documentos-preenchidos>
@@ -20,11 +20,11 @@
 
 <script>
   import { mapActions, mapState } from "vuex";
-  import TabelaDocumento from "@/modules/documento/components/TabelaDocumento";
-  import DocumentosPreenchidos from "./DocumentosPreenchidos.vue";
+  import TabelaDocumentoFirebase from "@/modules/documento/components/TabelaDocumentoFirebase";
+  import DocumentosPreenchidos from "./DocumentosPreenchidosFirebase.vue";
 
   export default {
-    components: { TabelaDocumento, DocumentosPreenchidos },
+    components: { TabelaDocumentoFirebase, DocumentosPreenchidos },
     data: () => ({
       tab: null,
       tabTitle: ["Modelos de Documento", "Documentos Preenchidos"],

@@ -7,17 +7,17 @@ export default [
   {
     path: "novo-documento",
     name: "NovoDocumento",
-    component: () => import("./pages/NovoDocumentoStepper"),
+    component: () => import("./pages/NovoDocumentoStepperFirebase"),
   },
   {
     path: "documento/:titulo",
     name: "PreencherDocumento",
-    component: () => import("./pages/PreencherDocumento"),
+    component: () => import("./pages/PreencherDocumentoFirebase"),
   },
   {
     path: "documentos-preenchidos",
     name: "DocumentosPreenchidos",
-    component: () => import("./pages/DocumentosPreenchidos"),
+    component: () => import("./pages/DocumentosPreenchidosFirebase"),
   },
   {
     path: "documento-preenchido/:id",

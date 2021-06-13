@@ -8,3 +8,17 @@ export const ATIVO = "ATIVO";
 export const INATIVO = "INATIVO";
 
 export const ACADEMICO = "ACADEMICO";
+
+export const TEXT_TABLE = {
+  STRING: "Texto",
+  DATETIME: "Data e Hora",
+  BOOLEAN: "Sim e não",
+  NUMBER: "Número",
+};
+
+export const DOCUMENT_TYPES = {
+  STRING: "STRING",
+  DATETIME: "DATETIME",
+  BOOLEAN: "BOOLEAN",
+  NUMBER: "NUMBER",
+};

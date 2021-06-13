@@ -9,6 +9,7 @@ import Axios from "axios";
 import VueDateFns from "vue-date-fns";
 import * as Sentry from "@sentry/vue";
 import { Integrations } from "@sentry/tracing";
+import { firestorePlugin } from "vuefire";
 
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -53,6 +54,8 @@ Sentry.init({
   integrations: [new Integrations.BrowserTracing()],
   tracesSampleRate: 1.0,
 });
+
+Vue.use(firestorePlugin);
 
 new Vue({
   vuetify,
