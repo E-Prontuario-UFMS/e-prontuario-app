@@ -49,7 +49,7 @@
 
 <script>
   import routerMixin from "@/mixins/router.mixin";
-  import { addNewProfessor } from "../services";
+  import { addNewProfessor } from "../../../firebase/services/professor";
   export default {
     mixins: [routerMixin],
     data: () => ({

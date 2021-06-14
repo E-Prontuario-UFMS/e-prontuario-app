@@ -49,7 +49,9 @@
   import { addNewDisciplina } from "../../disciplina/services";
   import EOverlay from "../../../shared/components/EOverlay.vue";
   import { getProfessoresFromApi } from "../../professores/services";
+  import { loadingMixin } from "@/mixins";
   export default {
+    mixins: [loadingMixin],
     components: { EOverlay },
     data: () => ({
       formValidation: false,
@@ -69,11 +71,11 @@
       // TODO PRECISO DE UMA ROTA QUE TRAGA TODOS OS NOMES DE PROFESSORES SEM PAGINAÇÃO
 
       async loadProfessores() {
-        this.loading = true;
+        this.startLoading();
         const response = await getProfessoresFromApi(1);
         const professores = response.data.content;
         this.setProfessores(professores);
-        this.loading = false;
+        this.stopLoading();
       },
       setProfessores(state) {
         this.professores = state;

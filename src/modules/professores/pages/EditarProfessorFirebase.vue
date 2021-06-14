@@ -48,14 +48,17 @@
 <script>
   import EOverlay from "../../../shared/components/EOverlay.vue";
   import ETitle from "../../../shared/components/ETitle.vue";
-  import { getProfessorById, updateProfessor } from "../services";
 
   import { routerMixin } from "@/mixins";
+  import {
+    editarProfessor,
+    getProfessorById,
+  } from "../../../firebase/services/professor";
   export default {
     mixins: [routerMixin],
     components: { ETitle, EOverlay },
     data: () => ({
-      loading: true,
+      loading: false,
       professor: {},
       form: {},
       snackbar: false,
@@ -68,22 +71,13 @@
     }),
     methods: {
       async loadProfessor() {
-        this.loading = true;
         const { id } = this.$route.params;
-        const { data: professor } = await getProfessorById(id);
-        this.professor = professor;
+        const professor = await getProfessorById(id);
         this.form = { ...professor };
-        this.loading = false;
       },
       async handleEditarProfessor() {
-        if (this.$refs.formRef.validate()) {
-          try {
-            await updateProfessor(this.form);
-            this.snackbar = true;
-          } catch (e) {
-            console.log(e);
-          }
-        }
+        const { id } = this.$route.params;
+        await editarProfessor(id, this.form);
       },
     },
     mounted() {

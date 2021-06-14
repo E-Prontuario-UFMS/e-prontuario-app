@@ -78,9 +78,7 @@
         await db
           .collection(DISCIPLINAS)
           .doc(item.id)
-          .delete()
-          .then(data => console.log(data))
-          .catch(err => console.error(err));
+          .delete();
       },
     },
     mounted() {

@@ -4,8 +4,14 @@
     <v-card class="my-6 pa-2">
       <v-card-title> Nome: {{ professor.nome }} </v-card-title>
       <v-card-subtitle> Siap: {{ professor.siap }} </v-card-subtitle>
+      <v-card-text>Disciplinas Alocadas: </v-card-text>
 
-      <v-card> </v-card>
+      <div v-if="disciplinas">
+        <v-card v-for="disciplina in disciplinas" :key="disciplina.id">
+          <v-card-title>{{ disciplina.nome }}</v-card-title>
+          <v-card-subtitle>{{ disciplina.descricao }}</v-card-subtitle>
+        </v-card>
+      </div>
     </v-card>
 
     <e-overlay :loading="loading"></e-overlay>
@@ -17,7 +23,7 @@
   import routerMixin from "@/mixins/router.mixin";
   import ETitle from "../../../shared/components/ETitle.vue";
   import { db } from "../../../firebase";
-  import { PROFESSORES } from "../../../constants";
+  import { DISCIPLINAS, PROFESSORES } from "../../../constants";
   export default {
     mixins: [routerMixin],
     components: { EOverlay, ETitle },
@@ -34,13 +40,18 @@
           .doc(id)
           .get()
           .then(data => data.data());
-        console.log(this.professor);
+        this.professor.disciplinas.map(async d => {
+          await db
+            .collection(DISCIPLINAS)
+            .doc(d.id)
+            .get()
+            .then(data => this.disciplinas.push(data.data()));
+        });
       },
     },
     mounted() {
       this.loadData();
     },
-    // TODO: Verificar se existe a possibilidade de buscar as disciplinas pertencentes a esse professor
   };
 </script>
 

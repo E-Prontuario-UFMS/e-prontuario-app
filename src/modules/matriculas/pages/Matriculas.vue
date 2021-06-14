@@ -36,7 +36,14 @@
       >
         <template v-slot:expanded-item="{ headers, item }">
           <td :colspan="headers.length">
-            {{ item }}
+            <v-card>
+              <v-card-title>
+                Materia: {{ item.disciplina.titulo }}
+              </v-card-title>
+              <v-card-subtitle>
+                Professor: {{ item.disciplina.professor.nome }}
+              </v-card-subtitle>
+            </v-card>
           </td>
         </template>
       </v-data-table>
