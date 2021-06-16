@@ -91,10 +91,10 @@
           passaporte: this.passaporte,
           senha: this.senha,
         };
-        this.ActionSetGlobalUser(payload).then(() => {
-          this.setLoading(false);
-          this.$router.push("/home");
-        });
+        await this.ActionSetGlobalUser(payload);
+        this.setLoading(false);
+        this.$router.push("/home");
+
         // .catch(() => {
         //   this.alert = true;
         //   this.error = "Não foi possivel logar";
