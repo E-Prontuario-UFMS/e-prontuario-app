@@ -91,20 +91,19 @@
           passaporte: this.passaporte,
           senha: this.senha,
         };
-        this.ActionSetGlobalUser(payload)
-          .then(() => {
-            this.setLoading(false);
-            this.$router.push("/home");
-          })
-          .catch(() => {
-            this.alert = true;
-            this.error = "Não foi possivel logar";
-            this.setLoading(false);
-            setTimeout(() => {
-              this.alert = false;
-              this.error = "";
-            }, 10000);
-          });
+        this.ActionSetGlobalUser(payload).then(() => {
+          this.setLoading(false);
+          this.$router.push("/home");
+        });
+        // .catch(() => {
+        //   this.alert = true;
+        //   this.error = "Não foi possivel logar";
+        //   this.setLoading(false);
+        //   setTimeout(() => {
+        //     this.alert = false;
+        //     this.error = "";
+        //   }, 10000);
+        // });
       },
     },
   };
