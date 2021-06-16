@@ -22,6 +22,6 @@ export default [
   {
     path: "documento-preenchido/:id",
     name: "DocumentoPreenchidoComId",
-    component: () => import("./pages/DocumentoPreenchidoId"),
+    component: () => import("./pages/DocumentoPreenchidoIdFirebase"),
   },
 ];

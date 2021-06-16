@@ -5,7 +5,7 @@
     >
       <v-data-table
         :headers="headers"
-        :items="documentosPreenchidos"
+        :items="documentos"
         :loading="loading"
         loading-text="Carregando, por favor espere"
       >
@@ -68,24 +68,22 @@
 </template>
 
 <script>
-  import { getDocumentosPreenchidos as fetchDocumentosPreenchidos } from "../services/getDocumentosPreenchidos";
-
+  import { efireMixin } from "@/mixins";
   export default {
     name: "DocumentosPreenchidos",
+    mixins: [efireMixin],
     data: () => ({
       loading: false,
       documentosPreenchidos: [],
-      page: 0,
-      limit: 10,
       headers: [
         {
           text: "Aluno",
-          value: "enfermeiro.nome",
+          value: "academico.nome",
           align: "start",
         },
         {
           text: "Titulo",
-          value: "titulo",
+          value: "documento.titulo",
           align: "start",
         },
         {
@@ -100,11 +98,6 @@
       },
       getDocumentosPreenchidos() {
         this.loading = true;
-        fetchDocumentosPreenchidos({ page: 0, limit: 10 }).then(({ data }) => {
-          this.documentosPreenchidos = data.content;
-          this.loading = false;
-          console.log(this.documentosPreenchidos);
-        });
       },
       acessarDocumento(item) {
         this.$router.push({
@@ -112,9 +105,6 @@
           params: { id: item.id },
         });
       },
-    },
-    mounted() {
-      this.getDocumentosPreenchidos();
     },
   };
 </script>

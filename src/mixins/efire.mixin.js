@@ -1,6 +1,7 @@
 import {
   ACADEMICOS,
   DISCIPLINAS,
+  DOCUMENTOS,
   MODELOS,
   PACIENTES,
   PROFESSORES,
@@ -16,7 +17,7 @@ export default {
     academicos: [],
   }),
   firestore: {
-    documentos: db.collection(MODELOS),
+    documentos: db.collection(DOCUMENTOS),
     professores: db.collection(PROFESSORES),
     modelos: db.collection(MODELOS),
     pacientes: db.collection(PACIENTES),

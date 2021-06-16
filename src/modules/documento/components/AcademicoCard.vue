@@ -1,16 +1,16 @@
 <template>
-  <v-card v-if="enfermeiro">
+  <v-card v-if="academico">
     <v-card-title>
       Academico
     </v-card-title>
-    <v-card-text> Nome: {{ enfermeiro.nome }} </v-card-text>
-    <v-card-text> RGA: {{ enfermeiro.rga }} </v-card-text>
+    <v-card-text> Nome: {{ academico.nome }} </v-card-text>
+    <v-card-text> RGA: {{ academico.rga }} </v-card-text>
   </v-card>
 </template>
 
 <script>
   export default {
-    props: ["enfermeiro"],
+    props: ["academico"],
     name: "AcademicoCard",
   };
 </script>

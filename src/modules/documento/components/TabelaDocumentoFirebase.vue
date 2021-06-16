@@ -42,7 +42,7 @@
               <div>
                 <v-data-table
                   :headers="headers"
-                  :items="documentos"
+                  :items="modelos"
                   class="elevation-1"
                 >
                   <template v-slot:item.acoes="{ item }">
@@ -121,7 +121,7 @@
     data: () => ({
       headers: [],
       search: "",
-      documentos: [],
+      modelos: [],
     }),
     computed: {
       ...mapState("login", ["usuario"]),

@@ -13,6 +13,19 @@
           <v-jsf v-model="numberModel" :schema="numberSchema"></v-jsf>
           <v-jsf v-model="booleanModel" :schema="booleanSchema"></v-jsf>
 
+          <v-row class="mx-6">
+            <v-select
+              :items="pacientes"
+              item-text="nome"
+              required
+              v-model="paciente"
+              label="Escolha o Paciente"
+              outlined
+              clearable
+              return-object
+            >
+            </v-select>
+          </v-row>
           <v-row justify="end" class="ma-6">
             <v-btn color="success" @click="handleFinish" :disabled="!valid">
               Concluir
@@ -27,7 +40,8 @@
 <script>
   import { mapState } from "vuex";
   import { db } from "../../../firebase";
-  import { routerMixin } from "@/mixins";
+  import { routerMixin, efireMixin } from "@/mixins";
+  import { getModeloDocumentoBySlug } from "../../../firebase/services/modeloDocumento";
   import ETitle from "../../../shared/components/ETitle.vue";
   import VJsf from "@koumoul/vjsf/lib/VJsf.js";
   import {
@@ -36,9 +50,10 @@
     buildBooleanSchema,
     buildNumberSchema,
   } from "../firebase/buildSchema";
+  import { ACADEMICOS, PACIENTES } from "../../../constants";
   export default {
     components: { ETitle, VJsf },
-    mixins: [routerMixin],
+    mixins: [routerMixin, efireMixin],
     data: () => ({
       documento: {},
       textSchema: {},
@@ -49,6 +64,8 @@
       booleanModel: {},
       numberSchema: {},
       numberModel: {},
+      pacientes: [],
+      paciente: {},
       valid: false,
     }),
     computed: {
@@ -58,32 +75,33 @@
     methods: {
       async loadData() {
         const slug = this.$route.params.titulo;
-        this.documento = await db
-          .collection("modelos")
-          .doc(slug)
-          .get()
-          .then(snapshot => snapshot.data());
+        this.documento = await getModeloDocumentoBySlug(slug);
         this.buildSchema();
       },
       buildSchema() {
         this.textSchema = buildTextSchema(this.documento);
-        console.log(this.textSchema);
         this.dataSchema = buildDataSchema(this.documento);
         this.booleanSchema = buildBooleanSchema(this.documento);
         this.numberSchema = buildNumberSchema(this.documento);
       },
-      handleFinish() {
+      async handleFinish() {
         const model = {
           ...this.textModel,
           ...this.dataModel,
           ...this.numberModel,
           ...this.booleanModel,
         };
-        console.log(model);
-        const slug = this.$route.params.titulo;
-        db.collection("documentos")
-          .doc(slug)
-          .set({ preenchido: model, documento: this.documento });
+
+        await db
+          .collection("documentos")
+          .doc()
+          .set({
+            preenchido: model,
+            documento: this.documento,
+            paciente: db.doc(`${PACIENTES}/${this.paciente.id}`),
+            createdAt: new Date(),
+            academico: db.doc(`${ACADEMICOS}/${this.usuario.rga}`),
+          });
       },
     },
     mounted() {
@@ -92,9 +110,14 @@
     watch: {
       $route() {
         this.titulo = this.$route.params.titulo;
+        this.loadData();
+      },
+      paciente: {
+        handler(e) {
+          console.log(e);
+        },
       },
     },
-    firestore: {},
   };
 </script>
 
