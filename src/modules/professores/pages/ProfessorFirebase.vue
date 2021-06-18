@@ -7,7 +7,13 @@
       <v-card-text>Disciplinas Alocadas: </v-card-text>
 
       <div v-if="disciplinas">
-        <v-card v-for="disciplina in disciplinas" :key="disciplina.id">
+        <v-card
+          v-for="disciplina in disciplinas"
+          :key="disciplina.id"
+          ripple
+          raised
+          @click="goTo(`/home/disciplina/${disciplina.id}`)"
+        >
           <v-card-title>{{ disciplina.nome }}</v-card-title>
           <v-card-subtitle>{{ disciplina.descricao }}</v-card-subtitle>
         </v-card>
