@@ -1,11 +1,14 @@
 <template>
   <v-container>
-    <div style="display: contents" v-if="documento">
+    <div style="display: contents">
       <e-title title="Documento" route="/home/documento"></e-title>
 
       <v-row class="wrap">
-        <v-col sm="12" md="6" lg="6">
-          <documento-card :documento="documento"></documento-card>
+        <v-col sm="12" md="12" lg="12">
+          <documento-card
+            :documentos="documentos"
+            :preenchido="preenchido"
+          ></documento-card>
         </v-col>
         <v-col sm="12" md="6" lg="6">
           <academico-card :academico="academico"></academico-card>
@@ -41,23 +44,25 @@
       DocumentoCard,
     },
     data: () => ({
-      documento: null,
-      academico: null,
-      paciente: null,
-      createdAt: null,
+      documentos: {},
+      academico: {},
+      paciente: {},
+      createdAt: {},
+      preenchido: {},
     }),
     methods: {
       async fetchDocumentById() {
         const id = this.$route.params.id;
         const response = await getDocumentoPreenchidoById(id);
-        this.documento = response.documento;
+        this.documentos = response.documento;
+        this.preenchido = response.preenchido;
         this.academico = await getAcademicoById(response.academico.id);
         this.paciente = await getPacienteById(response.paciente.id);
         this.createdAt = response.createdAt;
-        console.log(response);
+        console.log(this.documentos);
       },
     },
-    created() {
+    mounted() {
       this.fetchDocumentById();
     },
   };

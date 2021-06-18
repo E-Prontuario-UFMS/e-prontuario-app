@@ -4,14 +4,16 @@
     <v-card class="my-6 pa-2">
       <v-card-title> Nome: {{ professor.nome }} </v-card-title>
       <v-card-subtitle> Siap: {{ professor.siap }} </v-card-subtitle>
-      <v-card-text>Disciplinas Alocadas: </v-card-text>
 
-      <div v-if="disciplinas">
+      <div v-if="hasDisciplinas">
+        <v-card-text>Disciplinas Alocadas: </v-card-text>
         <v-card
           v-for="disciplina in disciplinas"
           :key="disciplina.id"
           ripple
           raised
+          class="my-2"
+          elevation="5"
           @click="goTo(`/home/disciplina/${disciplina.id}`)"
         >
           <v-card-title>{{ disciplina.nome }}</v-card-title>
@@ -38,6 +40,11 @@
       disciplinas: [],
       loading: false,
     }),
+    computed: {
+      hasDisciplinas() {
+        return this.disciplinas.length > 0;
+      },
+    },
     methods: {
       async loadData() {
         const { id } = this.$route.params;
@@ -51,7 +58,7 @@
             .collection(DISCIPLINAS)
             .doc(d.id)
             .get()
-            .then(data => this.disciplinas.push(data.data()));
+            .then(data => this.disciplinas.push({ ...data.data(), id: d.id }));
         });
       },
     },
