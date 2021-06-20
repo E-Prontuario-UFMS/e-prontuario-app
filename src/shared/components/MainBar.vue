@@ -33,8 +33,8 @@
           <v-list-item>
             <v-list-item-title>Paciente</v-list-item-title>
           </v-list-item>
-          <v-list-item>
-            <v-list-item-title v-if="isProfessor">
+          <v-list-item v-if="isProfessor">
+            <v-list-item-title>
               Disciplinas
             </v-list-item-title>
           </v-list-item>

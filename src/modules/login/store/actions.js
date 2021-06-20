@@ -31,3 +31,11 @@ export async function saveAcademicoOnFirebase(token, usuario) {
       { merge: true },
     );
 }
+
+export async function saveUsuarioProvisorio({ commit }, usuario) {
+  commit(types.SET_USUARIO_PROVISORIO, usuario);
+}
+
+export async function setUser({ commit }, usuario) {
+  commit(types.SET_USER, usuario);
+}

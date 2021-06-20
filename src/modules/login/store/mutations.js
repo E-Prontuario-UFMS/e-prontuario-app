@@ -9,4 +9,10 @@ export default {
     state.token = "";
     state.usuario = {};
   },
+  [types.SET_USUARIO_PROVISORIO](state, payload) {
+    state.usuarioProvisorio = payload;
+  },
+  [types.SET_USER](state, payload) {
+    state.user = payload;
+  },
 };
