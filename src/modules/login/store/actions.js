@@ -33,6 +33,7 @@ export async function saveAcademicoOnFirebase(token, usuario) {
 }
 
 export async function saveUsuarioProvisorio({ commit }, usuario) {
+  console.log("usuario - " + usuario);
   commit(types.SET_USUARIO_PROVISORIO, usuario);
 }
 

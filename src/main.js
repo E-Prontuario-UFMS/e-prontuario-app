@@ -7,13 +7,18 @@ import "es6-promise/auto";
 import store from "./store";
 import Axios from "axios";
 import VueDateFns from "vue-date-fns";
+import VueToast from "vue-toast-notification";
 import * as Sentry from "@sentry/vue";
 import { Integrations } from "@sentry/tracing";
 import { firestorePlugin } from "vuefire";
 
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "vue-toast-notification/dist/theme-sugar.css";
+
 import { isAValidToken } from "./utils/jwtDecode";
+
+Vue.use(VueToast);
 
 Vue.$http = new Axios.create({
   baseURL: "http://localhost:8080/eprontuario-api",

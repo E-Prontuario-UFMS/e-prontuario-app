@@ -48,7 +48,12 @@
                 <v-btn large class="primary" @click="doLogin">
                   Entrar
                 </v-btn>
-                <v-btn @click="goTo('registro')" large class="secondary ml-2">
+                <v-btn
+                  data-cy="btn-register"
+                  @click="goTo('registro')"
+                  large
+                  class="secondary ml-2"
+                >
                   Registrar
                 </v-btn>
               </v-layout>
@@ -94,9 +99,9 @@
         this.startLoading();
         const data = await doLogin(this);
         if (!(data instanceof Error)) {
-          console.log(data.user);
-          // this.setUser(data.user);
-          // this.$router.push("/home");
+          // console.log(data.user);
+          this.setUser(data.user);
+          this.$router.push("/home");
         }
         this.stopLoading();
       },

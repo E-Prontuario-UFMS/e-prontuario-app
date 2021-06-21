@@ -7,13 +7,12 @@ export function createEmail({ email, password, usuarioProvisorio }) {
       password,
       usuarioProvisorio,
     });
-  } else {
-    return createAluno({
-      email,
-      password,
-      usuarioProvisorio,
-    });
   }
+  return createAluno({
+    email,
+    password,
+    usuarioProvisorio,
+  });
 }
 
 function createProfessor({ email, password, usuarioProvisorio }) {
@@ -42,9 +41,10 @@ function createAluno({ email, password, usuarioProvisorio }) {
           })
           .then(() => {
             sendVerificationEmail(email);
-          });
+          })
+          .catch(err => Error(err.message));
       },
-      err => console.log(err),
+      err => Error(err.message),
     );
 }
 
@@ -59,6 +59,6 @@ export async function doLogin({ email, senha }) {
 function sendVerificationEmail(email) {
   firebase.auth().sendSignInLinkToEmail(email, {
     handleCodeInApp: true,
-    url: "http://localhost:3000/verifica",
+    url: "http://localhost:3000/verifica-email",
   });
 }

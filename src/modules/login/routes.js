@@ -15,7 +15,7 @@ export default [
     component: () => import("./pages/CreateEmailFirebase.vue"),
   },
   {
-    path: "/verifica",
+    path: "/verifica-email",
     name: "VerifyEmail",
     component: () => import("./pages/VerifyEmail.vue"),
   },

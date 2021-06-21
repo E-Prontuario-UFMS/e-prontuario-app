@@ -14,26 +14,38 @@
               <span class="font-weight-bold">{{ isProfessor }}</span>
             </v-card-subtitle>
             <v-card-text>
-              <v-form @submit.prevent="handleFormSubmit">
+              <v-form @submit.prevent="handleFormSubmit" v-model="form">
                 <v-text-field
                   outlined
                   label="Email"
                   v-model="email"
+                  data-cy="email"
+                  required
                 ></v-text-field>
                 <v-text-field
                   label="Senha"
                   v-model="password"
                   outlined
                   type="password"
+                  data-cy="password"
+                  required
                 ></v-text-field>
                 <v-text-field
                   label="Confirmação de Senha"
                   v-model="confirmationPassword"
                   outlined
                   type="password"
+                  data-cy="confirmation-password"
+                  required
                 ></v-text-field>
                 <v-row class="mt-5" justify="center">
-                  <v-btn large class="primary" type="submit">
+                  <v-btn
+                    large
+                    class="primary"
+                    type="submit"
+                    data-cy="btn-next"
+                    :disabled="!form"
+                  >
                     Proximo
                   </v-btn>
                 </v-row>
@@ -49,31 +61,36 @@
 
 <script>
   import Logo from "@/shared/components/Logo.vue";
-  import { loadingMixin } from "@/mixins";
+  import { loadingMixin, toastMixin } from "@/mixins";
   import EOverlay from "../../../shared/components/EOverlay.vue";
   import SwitchTheme from "../../../shared/components/SwitchTheme.vue";
   import { mapState } from "vuex";
   import { createEmail } from "../services/firebase";
   export default {
     components: { EOverlay, SwitchTheme, Logo },
-    mixins: [loadingMixin],
+    mixins: [loadingMixin, toastMixin],
     data: () => ({
-      email: "ygorazambuja@gmail.com",
-      password: "Vemqda@2020",
-      confirmationPassword: "Vemqda@2020",
+      email: "",
+      password: "",
+      confirmationPassword: "",
+      form: false,
     }),
     computed: {
       ...mapState("login", ["usuarioProvisorio"]),
       isProfessor() {
         return this.usuarioProvisorio.professor ? "Professor" : "Aluno";
       },
+      isFormValid() {
+        return this.$refs.formRef.validate();
+      },
     },
     methods: {
       async handleFormSubmit() {
         this.startLoading();
-        await createEmail(this);
+        const data = await createEmail(this);
+        data instanceof Error ? this.throwError(data.message) : null;
         // TODO: melhorar resposta
-        this.$router.replace("/verificacao-de-email");
+        // this.$router.replace("/verifica-email");
         this.stopLoading();
       },
     },

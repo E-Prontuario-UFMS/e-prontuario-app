@@ -1,12 +1,9 @@
 <template>
-  <v-main>
+  <v-container>
     <switch-theme></switch-theme>
-    <v-container>
-      <h1>Verifique seu email</h1>
-
-      {{ user.user.email }}
-    </v-container>
-  </v-main>
+    <h1>Verifique seu email</h1>
+    {{ getUserEmail }}
+  </v-container>
 </template>
 
 <script>
@@ -17,15 +14,20 @@
     components: { SwitchTheme },
     computed: {
       ...mapState("login", ["user"]),
+      getUserEmail() {
+        return this.user?.user?.email || "";
+      },
     },
     methods: {
       ...mapActions("login", ["setUser"]),
       checkRoute() {
+        console.log("checkroute");
         if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
           firebase
             .auth()
             .signInWithEmailLink(this.user.user.email, window.location.href)
             .then(({ user }) => {
+              console.log("deu certo");
               this.setUser({
                 displayName: user.displayName,
                 email: user.email,

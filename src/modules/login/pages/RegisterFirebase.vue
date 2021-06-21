@@ -20,14 +20,19 @@
                   outlined
                   label="Passaporte"
                   v-model="passaporte"
+                  data-cy="passaporte"
                 ></v-text-field>
                 <v-text-field
                   label="Senha"
                   v-model="senha"
+                  :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                  :type="show1 ? 'text' : 'password'"
+                  @click:append="show1 = !show1"
                   outlined
+                  data-cy="senha"
                 ></v-text-field>
                 <v-row class="mt-5" justify="center">
-                  <v-btn large class="primary" type="submit">
+                  <v-btn large class="primary" type="submit" data-cy="btn-next">
                     Proximo
                   </v-btn>
                 </v-row>
@@ -54,6 +59,7 @@
     data: () => ({
       passaporte: "",
       senha: "",
+      show1: false,
     }),
     methods: {
       ...mapActions("login", ["saveUsuarioProvisorio"]),
