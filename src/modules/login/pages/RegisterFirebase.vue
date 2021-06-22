@@ -53,9 +53,10 @@
   import EOverlay from "../../../shared/components/EOverlay.vue";
   import SwitchTheme from "../../../shared/components/SwitchTheme.vue";
   import { mapActions } from "vuex";
+  import { toastMixin } from "../../../mixins";
   export default {
     components: { EOverlay, SwitchTheme, Logo },
-    mixins: [loadingMixin],
+    mixins: [loadingMixin, toastMixin],
     data: () => ({
       passaporte: "",
       senha: "",
@@ -68,7 +69,7 @@
         const data = await doSiscadLogin(this);
 
         if (data instanceof Error) {
-          console.log(data.message);
+          this.throwError("Não foi possivel fazer o login no Siscad 😞");
         } else {
           this.saveUsuarioProvisorio(data);
           this.$router.push("/create-email");

@@ -11,7 +11,7 @@ export const doSiscadLogin = async ({ passaporte, senha }) => {
       senha,
     })
     .catch(() => {
-      return new Error("Não foi possivel fazer o login, tente novamente");
+      return Error("Não foi possivel fazer o login, tente novamente");
     });
 
   if (response && response.status === 200) {

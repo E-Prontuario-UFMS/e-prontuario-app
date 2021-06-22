@@ -2,6 +2,7 @@ describe("Should Test the Create Account module", () => {
   beforeEach(() => {
     cy.viewport("macbook-15");
   });
+
   it("should create an account successfully", () => {
     cy.visit("/");
     cy.get('[data-cy="btn-register"]').click();

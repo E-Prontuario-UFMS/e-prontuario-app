@@ -14,8 +14,8 @@
 
     <v-navigation-drawer app width="300" v-model="drawer">
       <v-card height="128" width="100%">
-        <v-card-title>{{ usuario && usuario.nome }} </v-card-title>
-        <v-card-subtitle>RGA: {{ usuario && usuario.rga }}</v-card-subtitle>
+        <v-card-title>{{ user && user.displayName }} </v-card-title>
+        <v-card-subtitle>{{ user && user.email }}</v-card-subtitle>
       </v-card>
 
       <v-list shaped>
@@ -71,9 +71,9 @@
       selectedItem: 0,
     }),
     computed: {
-      ...mapState("login", ["usuario"]),
+      ...mapState("login", ["user"]),
       isProfessor() {
-        return this.usuario.role === `PROFESSOR`;
+        return true;
       },
     },
     methods: {

@@ -3,9 +3,9 @@
     <div>
       <v-card class="mx-auto pa-2" max-width="400">
         <v-card-title>
-          <span class="text--darken-1 blue--text"
-            >Bem vindo(a) ao E-Prontuario</span
-          >
+          <span class="text--darken-1 blue--text">
+            Bem vindo(a) ao E-Prontuario
+          </span>
         </v-card-title>
         <v-img
           contain
@@ -19,14 +19,25 @@
 </template>
 
 <script>
-  import { mapActions } from "vuex";
+  import { mapActions, mapState } from "vuex";
+  import { toastMixin } from "../../../mixins";
   export default {
-    computed: {},
+    mixins: [toastMixin],
+    computed: {
+      ...mapState("login", ["user"]),
+    },
     methods: {
       ...mapActions("documento", ["ActionGetTitulosDocumento"]),
+
+      checkIfEmailIsVerified() {
+        this.user.emailVerified
+          ? null
+          : this.throwError("Email ainda não foi verificado 😞");
+      },
     },
     mounted() {
       this.ActionGetTitulosDocumento();
+      this.checkIfEmailIsVerified();
     },
   };
 </script>

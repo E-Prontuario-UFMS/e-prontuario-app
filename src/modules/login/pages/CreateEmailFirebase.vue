@@ -64,7 +64,7 @@
   import { loadingMixin, toastMixin } from "@/mixins";
   import EOverlay from "../../../shared/components/EOverlay.vue";
   import SwitchTheme from "../../../shared/components/SwitchTheme.vue";
-  import { mapState } from "vuex";
+  import { mapActions, mapState } from "vuex";
   import { createEmail } from "../services/firebase";
   export default {
     components: { EOverlay, SwitchTheme, Logo },
@@ -85,13 +85,21 @@
       },
     },
     methods: {
+      ...mapActions("login", ["setUser"]),
       async handleFormSubmit() {
         this.startLoading();
         const data = await createEmail(this);
-        data instanceof Error ? this.throwError(data.message) : null;
-        // TODO: melhorar resposta
-        // this.$router.replace("/verifica-email");
+        data instanceof Error
+          ? this.throwError("Algo deu errado 😞")
+          : this.handleSuccessfullyCreatedEmail();
         this.stopLoading();
+      },
+      handleSuccessfullyCreatedEmail() {
+        this.throwSuccess(`Email enviado para ${this.email}`);
+        this.setUser({
+          email: this.email,
+        });
+        this.$router.replace("/verifica-email");
       },
     },
     mounted() {
@@ -101,5 +109,3 @@
     },
   };
 </script>
-
-<style></style>

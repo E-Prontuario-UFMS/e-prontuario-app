@@ -1,18 +1,17 @@
 import { firebase } from "../../../firebase";
 
 export function createEmail({ email, password, usuarioProvisorio }) {
-  if (usuarioProvisorio.professor) {
-    return createProfessor({
-      email,
-      password,
-      usuarioProvisorio,
-    });
-  }
-  return createAluno({
-    email,
-    password,
-    usuarioProvisorio,
-  });
+  return usuarioProvisorio.professor
+    ? createProfessor({
+        email,
+        password,
+        usuarioProvisorio,
+      })
+    : createAluno({
+        email,
+        password,
+        usuarioProvisorio,
+      });
 }
 
 function createProfessor({ email, password, usuarioProvisorio }) {
@@ -21,11 +20,16 @@ function createProfessor({ email, password, usuarioProvisorio }) {
     .createUserWithEmailAndPassword(email, password)
     .then(
       credentials => {
-        credentials.user.updateProfile({
-          displayName: usuarioProvisorio.usuario.nome,
-        });
+        credentials.user
+          .updateProfile({
+            displayName: usuarioProvisorio.usuario.nome,
+          })
+          .then(() => {
+            sendVerificationEmail(email);
+          })
+          .catch(err => Error(err.message));
       },
-      err => console.log(err),
+      err => Error(err.message),
     );
 }
 
@@ -53,12 +57,12 @@ export async function doLogin({ email, senha }) {
     .auth()
     .signInWithEmailAndPassword(email, senha)
     .then(credentials => credentials)
-    .catch(() => new Error("Não foi possivel fazer login"));
+    .catch(() => Error("Não foi possivel fazer login"));
 }
 
 function sendVerificationEmail(email) {
   firebase.auth().sendSignInLinkToEmail(email, {
     handleCodeInApp: true,
-    url: "http://localhost:3000/verifica-email",
+    url: `http://localhost:3000/verifica-email?email=${email}`,
   });
 }

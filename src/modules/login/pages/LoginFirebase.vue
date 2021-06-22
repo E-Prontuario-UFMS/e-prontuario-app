@@ -28,6 +28,7 @@
                   name="email"
                   label="Email"
                   :disabled="loading"
+                  data-cy="email"
                 ></v-text-field>
                 <v-text-field
                   :disabled="loading"
@@ -36,7 +37,7 @@
                   :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                   :rules="[passwordRules.required, passwordRules.min]"
                   :type="show1 ? 'text' : 'password'"
-                  name="input-10-1"
+                  data-cy="password"
                   label="Senha"
                   @keypress.enter="doLogin"
                   @click:append="show1 = !show1"
@@ -45,7 +46,12 @@
             </v-card-text>
             <v-card-actions>
               <v-layout align-center justify-center>
-                <v-btn large class="primary" @click="doLogin">
+                <v-btn
+                  large
+                  class="primary"
+                  @click="doLogin"
+                  data-cy="btn-next"
+                >
                   Entrar
                 </v-btn>
                 <v-btn
@@ -56,6 +62,7 @@
                 >
                   Registrar
                 </v-btn>
+                <!-- <v-btn @click="googleLogin">google</v-btn> -->
               </v-layout>
             </v-card-actions>
           </v-card>
@@ -72,12 +79,12 @@
   import Logo from "@/shared/components/Logo.vue";
   import { mapActions } from "vuex";
   import SwitchTheme from "@/shared/components/SwitchTheme.vue";
-  import { routerMixin, loadingMixin } from "@/mixins";
+  import { routerMixin, loadingMixin, toastMixin } from "@/mixins";
   import { doLogin } from "../services/firebase";
-
+  import { firebase } from "../../../firebase";
   export default {
     components: { Logo, SwitchTheme },
-    mixins: [routerMixin, loadingMixin],
+    mixins: [routerMixin, loadingMixin, toastMixin],
     data: () => ({
       show1: false,
       email: "",
@@ -98,12 +105,49 @@
       async doLogin() {
         this.startLoading();
         const data = await doLogin(this);
-        if (!(data instanceof Error)) {
-          // console.log(data.user);
-          this.setUser(data.user);
-          this.$router.push("/home");
-        }
+        data instanceof Error
+          ? this.throwError("Não foi possivel fazer o login 😞")
+          : this.handleSuccessfullyLogin(data);
         this.stopLoading();
+      },
+      handleSuccessfullyLogin({ user }) {
+        this.setUser({
+          emailVerified: user.emailVerified,
+          displayName: user.displayName,
+          email: user.email,
+          photoUrl: user.photoUrl,
+          phoneNumber: user.phoneNumber,
+        });
+        this.$router.push("/home");
+      },
+      googleLogin() {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
+        firebase.auth().languageCode = "it";
+        firebase
+          .auth()
+          .signInWithPopup(provider)
+          .then(result => {
+            /** @type {firebase.auth.OAuthCredential} */
+            // var credential = result.credential;
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            // var token = credential.accessToken;
+            // The signed-in user info.
+            // var user = result.user;
+            // ...
+            console.log(result);
+          })
+          .catch(error => {
+            this.throwError(error);
+            // Handle Errors here.
+            // var errorCode = error.code;
+            // var errorMessage = error.message;
+            // The email of the user's account used.
+            // var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            // var credential = error.credential;
+            // ...
+          });
       },
     },
   };
