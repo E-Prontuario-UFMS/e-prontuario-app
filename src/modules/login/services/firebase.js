@@ -63,6 +63,6 @@ export async function doLogin({ email, senha }) {
 function sendVerificationEmail(email) {
   firebase.auth().sendSignInLinkToEmail(email, {
     handleCodeInApp: true,
-    url: `http://localhost:3000/verifica-email?email=${email}`,
+    url: `${process.env.VUE_APP_URL}/verifica-email?email=${email}`,
   });
 }
