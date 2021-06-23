@@ -75,6 +75,8 @@
       confirmationPassword: "",
       form: false,
     }),
+    // TODO: depois de buscar o aluno no siscad, verificar se o mesmo ja tem cadastro no sistema
+    // TODO: obrigar uma senha melhor, 8 caracteres com caracteres especiais
     computed: {
       ...mapState("login", ["usuarioProvisorio"]),
       isProfessor() {

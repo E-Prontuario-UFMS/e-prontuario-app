@@ -8,7 +8,9 @@
       <v-card-title>
         Professor Responsavel: {{ professor.nome }} || {{ professor.siap }}
       </v-card-title>
-      <v-card-text> </v-card-text>
+      <v-card-text>
+        {{ disciplina }}
+      </v-card-text>
     </v-card>
   </v-container>
 </template>
@@ -48,5 +50,3 @@
     },
   };
 </script>
-
-<style></style>

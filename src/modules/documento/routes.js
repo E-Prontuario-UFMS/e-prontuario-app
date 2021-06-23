@@ -2,7 +2,7 @@ export default [
   {
     path: "documento",
     name: "Documento",
-    component: () => import("./pages/Documento"),
+    component: () => import("./pages/DocumentoDisciplinaFirebase"),
   },
   {
     path: "novo-documento",

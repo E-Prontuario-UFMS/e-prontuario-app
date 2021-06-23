@@ -105,6 +105,7 @@
       async doLogin() {
         this.startLoading();
         const data = await doLogin(this);
+        console.log(data);
         data instanceof Error
           ? this.throwError("Não foi possivel fazer o login 😞")
           : this.handleSuccessfullyLogin(data);

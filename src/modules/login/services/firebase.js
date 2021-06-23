@@ -53,6 +53,7 @@ function createAluno({ email, password, usuarioProvisorio }) {
 }
 
 export async function doLogin({ email, senha }) {
+  console.log(senha);
   return firebase
     .auth()
     .signInWithEmailAndPassword(email, senha)
