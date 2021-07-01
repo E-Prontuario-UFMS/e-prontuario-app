@@ -106,7 +106,8 @@
         });
       },
     },
+    mounted() {
+      console.log(this.documentos);
+    },
   };
 </script>
-
-<style scoped></style>

@@ -69,7 +69,7 @@
       valid: false,
     }),
     computed: {
-      ...mapState("login", ["usuario"]),
+      ...mapState("login", ["user"]),
       ...mapState("paciente", ["pacientesPagination"]),
     },
     methods: {
@@ -92,16 +92,14 @@
           ...this.booleanModel,
         };
 
-        await db
-          .collection("documentos")
-          .doc()
-          .set({
-            preenchido: model,
-            documento: this.documento,
-            paciente: db.doc(`${PACIENTES}/${this.paciente.id}`),
-            createdAt: new Date(),
-            academico: db.doc(`${ACADEMICOS}/${this.usuario.rga}`),
-          });
+        await db.collection("documentos").add({
+          preenchido: model,
+          documento: this.documento,
+          paciente: db.doc(`${PACIENTES}/${this.paciente.id}`),
+          createdAt: new Date(),
+          academico: db.doc(`${ACADEMICOS}/${this.user.uid}`),
+        });
+        this.$router.replace("/home/documento");
       },
     },
     mounted() {
@@ -111,11 +109,6 @@
       $route() {
         this.titulo = this.$route.params.titulo;
         this.loadData();
-      },
-      paciente: {
-        handler(e) {
-          console.log(e);
-        },
       },
     },
   };

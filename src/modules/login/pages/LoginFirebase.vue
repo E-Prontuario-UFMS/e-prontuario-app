@@ -44,6 +44,7 @@
                 ></v-text-field>
               </v-form>
             </v-card-text>
+
             <v-card-actions>
               <v-layout align-center justify-center>
                 <v-btn
@@ -65,6 +66,11 @@
                 <!-- <v-btn @click="googleLogin">google</v-btn> -->
               </v-layout>
             </v-card-actions>
+            <v-row justify="center" class="ma-2">
+              <router-link to="esqueci-a-senha">
+                Esqueceu a Senha ?
+              </router-link>
+            </v-row>
           </v-card>
         </v-flex>
       </v-layout>
@@ -105,7 +111,6 @@
       async doLogin() {
         this.startLoading();
         const data = await doLogin(this);
-        console.log(data);
         data instanceof Error
           ? this.throwError("Não foi possivel fazer o login 😞")
           : this.handleSuccessfullyLogin(data);
@@ -121,6 +126,7 @@
         });
         this.$router.push("/home");
       },
+
       googleLogin() {
         const provider = new firebase.auth.GoogleAuthProvider();
         provider.addScope("https://www.googleapis.com/auth/contacts.readonly");

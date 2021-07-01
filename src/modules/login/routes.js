@@ -19,4 +19,9 @@ export default [
     name: "VerifyEmail",
     component: () => import("./pages/VerifyEmail.vue"),
   },
+  {
+    path: "/esqueci-a-senha",
+    name: "EsqueciSenha",
+    component: () => import("./pages/EsqueciSenha.vue"),
+  },
 ];

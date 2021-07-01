@@ -21,6 +21,7 @@
                   v-model="email"
                   data-cy="email"
                   required
+                  type="email"
                 ></v-text-field>
                 <v-text-field
                   label="Senha"
@@ -29,6 +30,7 @@
                   type="password"
                   data-cy="password"
                   required
+                  :rules="[passwordRules.required, passwordRules.min]"
                 ></v-text-field>
                 <v-text-field
                   label="Confirmação de Senha"
@@ -74,8 +76,11 @@
       password: "",
       confirmationPassword: "",
       form: false,
+      passwordRules: {
+        required: value => !!value || "Não pode ser vazio.",
+        min: v => v.length >= 8 || "Minimo de 8 Caracteres",
+      },
     }),
-    // TODO: depois de buscar o aluno no siscad, verificar se o mesmo ja tem cadastro no sistema
     // TODO: obrigar uma senha melhor, 8 caracteres com caracteres especiais
     computed: {
       ...mapState("login", ["usuarioProvisorio"]),
