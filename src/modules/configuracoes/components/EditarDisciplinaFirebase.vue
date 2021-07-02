@@ -50,9 +50,15 @@
   import ETitle from "../../../shared/components/ETitle.vue";
   import { routerMixin, efireMixin } from "@/mixins";
   import { db } from "../../../firebase";
-  import { DISCIPLINAS, PROFESSORES } from "../../../constants";
+  import { DISCIPLINAS } from "../../../constants";
+  import { fetchDisciplinaById } from "../../../firebase/services/disciplina";
+  import {
+    addDisciplinaToProfessor,
+    getProfessorById,
+  } from "../../../firebase/services/professor";
+  import { toastMixin } from "../../../mixins";
   export default {
-    mixins: [routerMixin, efireMixin],
+    mixins: [routerMixin, efireMixin, toastMixin],
     components: { ETitle, EOverlay },
     data: () => ({
       loading: false,
@@ -69,30 +75,26 @@
     methods: {
       async loadDisciplina() {
         const { id } = this.$route.params;
-        this.disciplina = await db
-          .collection(DISCIPLINAS)
-          .doc(id)
-          .get()
-          .then(data => data.data());
+        this.disciplina = await fetchDisciplinaById(id);
+        this.fillProfessor();
       },
       async handleEdit() {
         if (this.$refs.formRef.validate()) {
           const { id } = this.$route.params;
-          console.log(this.disciplina);
           await db
             .collection(DISCIPLINAS)
             .doc(id)
             .update({
               ...this.disciplina,
             });
-
-          const professor = await db
-            .collection(PROFESSORES)
-            .doc(this.professorAutoComplete.id)
-            .get()
-            .then(data => data.data());
-          console.log(professor);
+          await addDisciplinaToProfessor(this.professorAutoComplete.id, id);
+          this.throwSuccess("Disciplina Editada com sucesso 🙋");
+          this.goBack();
         }
+      },
+      async fillProfessor() {
+        const professor = await getProfessorById(this.disciplina.professor.id);
+        this.professorAutoComplete = professor;
       },
     },
     mounted() {

@@ -10,6 +10,15 @@
 
       <v-tabs-items v-model="tab">
         <v-tab-item>
+          <v-row justify="end" v-if="isProfessor">
+            <v-btn
+              color="success"
+              class="my-3 mx-5"
+              @click="goTo('novo-documento')"
+            >
+              Adicionar Novo
+            </v-btn>
+          </v-row>
           <v-data-table
             :headers="headers"
             :items="disciplinas"
@@ -65,6 +74,7 @@
 </template>
 
 <script>
+  import { mapGetters } from "vuex";
   import { efireMixin, routerMixin } from "../../../mixins";
   import ETitle from "../../../shared/components/ETitle.vue";
   import DocumentosPreenchidosFirebase from "./DocumentosPreenchidosFirebase.vue";
@@ -72,6 +82,9 @@
   export default {
     mixins: [efireMixin, routerMixin],
     components: { ETitle, DocumentosPreenchidosFirebase },
+    computed: {
+      ...mapGetters("login", ["isProfessor"]),
+    },
     data: () => ({
       disciplinas: [],
       tab: null,
@@ -86,9 +99,8 @@
     methods: {
       loadDocumentosFromDisciplinas() {},
     },
-
     mounted() {
-      console.log(this.disciplinas);
+      console.log(this);
     },
   };
 </script>

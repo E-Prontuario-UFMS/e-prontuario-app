@@ -18,9 +18,23 @@ export async function getProfessorById(id) {
 }
 
 export async function editarProfessor(id, professor) {
-  console.log(professor);
   return await db
     .collection(PROFESSORES)
     .doc(id)
     .set({ ...professor }, { merge: true });
+}
+
+export async function addDisciplinaToProfessor(idProfessor, idDisciplina) {
+  idDisciplina;
+  const disciplinasDoProfessor = await db
+    .collection(PROFESSORES)
+    .doc(idProfessor)
+    .get()
+    .then(data => data.data());
+
+  disciplinasDoProfessor.map(disciplina => console.log(disciplina));
+  return await db
+    .collection(PROFESSORES)
+    .doc(idProfessor)
+    .update({});
 }

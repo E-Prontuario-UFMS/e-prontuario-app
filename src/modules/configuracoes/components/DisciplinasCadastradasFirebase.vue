@@ -50,8 +50,8 @@
             </div>
           </td>
         </tr>
-      </template></v-data-table
-    >
+      </template>
+    </v-data-table>
     <e-overlay :loading="loading"></e-overlay>
   </v-container>
 </template>

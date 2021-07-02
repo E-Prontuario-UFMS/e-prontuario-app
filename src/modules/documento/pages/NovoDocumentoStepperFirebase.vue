@@ -6,7 +6,7 @@
           mdi-arrow-left
         </v-icon>
       </v-btn>
-      <h5>Novo Modelo de Documento Firebase</h5>
+      <h5>Novo Modelo de Documento</h5>
     </v-row>
     <v-stepper v-model="e1">
       <v-stepper-header>
@@ -60,7 +60,7 @@
             Continuar
           </v-btn>
 
-          <v-btn text>
+          <v-btn text @click="goBack">
             Cancelar
           </v-btn>
         </v-stepper-content>

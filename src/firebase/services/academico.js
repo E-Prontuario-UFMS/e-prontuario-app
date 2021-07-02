@@ -8,3 +8,13 @@ export async function getAcademicoById(id) {
     .get()
     .then(snapshot => snapshot.data());
 }
+
+export async function getUserByAuthenticationId(id) {
+  return await db
+    .collection(ACADEMICOS)
+    .where("id", "==", id)
+    .get()
+    .then(snapshot => {
+      return snapshot.docs[0].data();
+    });
+}

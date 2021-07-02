@@ -88,6 +88,7 @@
   import { routerMixin, loadingMixin, toastMixin } from "@/mixins";
   import { doLogin } from "../services/firebase";
   import { firebase } from "../../../firebase";
+  import { getUserByAuthenticationId } from "../../../firebase/services/academico";
   export default {
     components: { Logo, SwitchTheme },
     mixins: [routerMixin, loadingMixin, toastMixin],
@@ -116,13 +117,15 @@
           : this.handleSuccessfullyLogin(data);
         this.stopLoading();
       },
-      handleSuccessfullyLogin({ user }) {
+      async handleSuccessfullyLogin({ user }) {
+        const firebaseUser = await getUserByAuthenticationId(user.uid);
         this.setUser({
           emailVerified: user.emailVerified,
           displayName: user.displayName,
           email: user.email,
           photoUrl: user.photoUrl,
           phoneNumber: user.phoneNumber,
+          isProfessor: firebaseUser.isProfessor,
         });
         this.$router.push("/home");
       },
