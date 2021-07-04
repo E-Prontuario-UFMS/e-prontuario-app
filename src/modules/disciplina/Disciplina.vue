@@ -16,10 +16,26 @@
         Não existe professor designado ainda
       </v-card-title>
       <v-card-actions>
-        <v-btn>Designar Professor</v-btn>
+        <v-btn @click="goTo(`/configuracoes/disciplinas/designar/${routeId}`)">
+          Designar Professor
+        </v-btn>
       </v-card-actions>
     </v-card>
-    <v-card> </v-card>
+    <v-card v-if="this.hasMoreThanOneModels">
+      <v-card-title>
+        Modelos Relacionados
+      </v-card-title>
+      <v-list>
+        <v-list-item v-for="modelo in modelos" :key="modelo.id">
+          <v-list-item-title>{{ modelo.titulo }}</v-list-item-title>
+          <v-list-item-action>
+            <v-btn icon>
+              <v-icon>mdi-arrow-right</v-icon>
+            </v-btn>
+          </v-list-item-action>
+        </v-list-item>
+      </v-list>
+    </v-card>
   </v-container>
 </template>
 
@@ -41,26 +57,30 @@
       },
       professor: {},
       loading: true,
+      modelos: [],
     }),
 
     computed: {
       hasProfessorDesignado() {
         return !!this.professor.nome && !!this.professor.siap;
       },
+      routeId() {
+        return this.$route.params.id;
+      },
+      hasMoreThanOneModels() {
+        return this.modelos.length > 0;
+      },
     },
 
     methods: {
       async loadDisciplina() {
-        const { id } = this.$route.params;
-        const disciplina = await fetchDisciplinaById(id);
+        const disciplina = await fetchDisciplinaById(this.routeId);
         this.disciplina = disciplina;
         this.loadProfessorResponsavel();
-        const response = await getModeloDocumentoByDisciplina(id);
-        console.log(response);
+        this.modelos = await getModeloDocumentoByDisciplina(this.routeId);
       },
       async loadProfessorResponsavel() {
-        const { id } = this.$route.params;
-        const response = await fetchProfessorByDisciplinaId(id);
+        const response = await fetchProfessorByDisciplinaId(this.routeId);
         this.professor = response;
       },
     },

@@ -1,5 +1,5 @@
 import { PROFESSORES } from "../../constants";
-import { db } from "../../firebase";
+import { db, firebase } from "../../firebase";
 
 export async function addNewProfessor({ siap, nome }) {
   db.collection(PROFESSORES).add({
@@ -37,4 +37,26 @@ export async function addDisciplinaToProfessor(idProfessor, idDisciplina) {
     .collection(PROFESSORES)
     .doc(idProfessor)
     .update({});
+}
+
+export async function fetchAllProfessores() {
+  return await db
+    .collection(PROFESSORES)
+    .get()
+    .then(data => {
+      return data.docs;
+    });
+}
+
+export async function designarProfessorDisciplina(idProfessor, idDisciplina) {
+  const disciplinaRef = db.doc(`/disciplinas/${idDisciplina}`);
+
+  return await db
+    .collection(PROFESSORES)
+    .doc(idProfessor)
+    .update({
+      disciplinas: firebase.firestore.FieldValue.arrayUnion(disciplinaRef),
+    })
+    .then(data => data)
+    .catch(err => Error(err));
 }

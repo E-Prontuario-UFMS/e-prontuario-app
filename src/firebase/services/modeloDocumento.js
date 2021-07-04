@@ -10,14 +10,17 @@ export async function getModeloDocumentoBySlug(slug) {
 }
 
 export async function getModeloDocumentoByDisciplina(disciplinaId) {
-  return await db
+  const { modelos } = await db
     .collection(DISCIPLINAS)
     .doc(disciplinaId)
     .get()
-    .then(async snapshot => {
-      const { modelos } = await snapshot.data();
-      return await modelos.map(async ({ id }) => {
-        return await getModeloDocumentoBySlug(id);
-      });
-    });
+    .then(snapshot => snapshot.data());
+
+  const modelosLoaded = [];
+  await modelos.map(async ({ id }) => {
+    const modelo = await getModeloDocumentoBySlug(id);
+    modelosLoaded.push(modelo);
+  });
+  console.log(modelosLoaded);
+  return modelosLoaded;
 }

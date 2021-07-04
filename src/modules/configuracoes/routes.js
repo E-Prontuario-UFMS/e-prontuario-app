@@ -14,4 +14,9 @@ export default [
     name: "EditarDisciplina",
     component: () => import("./components/EditarDisciplinaFirebase.vue"),
   },
+  {
+    path: "/configuracoes/disciplinas/designar/:id",
+    name: "DesignarProfessor",
+    component: () => import("./pages/DesignarProfessor.vue"),
+  },
 ];
