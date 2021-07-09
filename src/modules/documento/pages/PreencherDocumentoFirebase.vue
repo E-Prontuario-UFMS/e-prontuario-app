@@ -70,7 +70,6 @@
     }),
     computed: {
       ...mapState("login", ["user"]),
-      ...mapState("paciente", ["pacientesPagination"]),
     },
     methods: {
       async loadData() {

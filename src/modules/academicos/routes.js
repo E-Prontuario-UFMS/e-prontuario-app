@@ -2,12 +2,12 @@ export default [
   {
     path: "/academicos",
     name: "Academicos",
-    component: () => import("./pages/Academicos.vue"),
+    component: () => import("./pages/AcademicosFirebase.vue"),
   },
   {
     path: "/academico/:id",
     name: "Academico",
-    component: () => import("./pages/Academico.vue"),
+    component: () => import("./pages/AcademicoFirebase.vue"),
   },
   {
     path: "/novo-academico",

@@ -122,6 +122,7 @@
       headers: [],
       search: "",
       modelos: [],
+      searchedModels: [],
     }),
     computed: {
       ...mapState("login", ["usuario"]),
@@ -137,6 +138,7 @@
           params: { titulo: item.id },
         });
       },
+
       criarHeaderDaTabela() {
         return [
           {
@@ -160,6 +162,11 @@
             width: "20%",
           },
         ];
+      },
+    },
+    watch: {
+      search(value) {
+        console.log(value);
       },
     },
   };

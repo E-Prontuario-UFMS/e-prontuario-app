@@ -11,9 +11,9 @@
     <v-card class="ma-5 pa-2">
       <v-data-table
         :headers="headers"
-        :items="academicosPagination.content"
+        :items="academicos"
         :options.sync="options"
-        :server-items-length.sync="academicosPagination.totalElements"
+        :server-items-length.sync="academicos.length"
         :loading="loading"
         :page.sync="page"
         class="elevation-1"
@@ -67,9 +67,10 @@
   import { getAcademicos } from "../services";
   import routerMixin from "@/mixins/router.mixin";
   import ETitle from "../../../shared/components/ETitle.vue";
+  import { efireMixin } from "../../../mixins";
   export default {
     components: { ETitle },
-    mixins: [routerMixin],
+    mixins: [routerMixin, efireMixin],
     data: () => ({
       page: 1,
       academicosPagination: {},
@@ -90,7 +91,6 @@
     methods: {
       async loadAcademicos() {
         const { data } = await getAcademicos({ page: this.page - 1 });
-        console.log(data);
         this.academicosPagination = data;
       },
       async handleDeleteAcademico(academico) {

@@ -1,5 +1,6 @@
-import { ACADEMICOS, DISCIPLINAS, PROFESSORES } from "../../constants";
+import { DISCIPLINAS, PROFESSORES } from "../../constants";
 import { db, firebase } from "../../firebase";
+import { getAcademicoById } from "./academico";
 
 export async function fetchDisciplinaById(id) {
   return await db
@@ -26,22 +27,19 @@ export async function fetchAllDisciplinas() {
 }
 
 export async function fetchAlunosByDisciplina(disciplinaId) {
-  const { alunos: alunosRef } = await db
+  const { academicos: academicosRef } = await db
     .collection(DISCIPLINAS)
     .doc(disciplinaId)
     .get()
-    .then(snapshot => snapshot.data());
+    .then(data => data.data());
 
-  const alunos = [];
-  await alunosRef.forEach(async alunoRef => {
-    const aluno = await db
-      .collection(ACADEMICOS)
-      .doc(alunoRef.id)
-      .get()
-      .then(snapshot => snapshot.data());
-    alunos.push(aluno);
+  const academicos = [];
+
+  await academicosRef.forEach(async ({ id }) => {
+    const academico = await getAcademicoById(id);
+    academicos.push(academico);
   });
-  return alunos;
+  return academicos;
 }
 
 export async function addModeloInDisciplina(disciplinaId, modelId) {
@@ -65,6 +63,19 @@ export async function removeModeloInDisciplina(disciplinaId, modelId) {
     .doc(disciplinaId)
     .update({
       modelos: firebase.firestore.FieldValue.arrayRemove(modelIdRef),
+    })
+    .then(data => data)
+    .catch(err => Error(err));
+}
+
+export async function addAlunoInDisciplina(disciplinaId, alunoId) {
+  const alunoRef = db.doc(`/academicos/${alunoId}`);
+
+  return await db
+    .collection(DISCIPLINAS)
+    .doc(disciplinaId)
+    .update({
+      academicos: firebase.firestore.FieldValue.arrayUnion(alunoRef),
     })
     .then(data => data)
     .catch(err => Error(err));

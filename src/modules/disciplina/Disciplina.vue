@@ -42,7 +42,7 @@
         </v-list-item>
       </v-list>
     </v-card>
-    <alunos-matriculados :alunos="alunos"></alunos-matriculados>
+    <alunos-matriculados :alunos="alunos" />
   </v-container>
 </template>
 
@@ -74,9 +74,6 @@
       hasProfessorDesignado() {
         return !!this.professor.nome && !!this.professor.siap;
       },
-      routeId() {
-        return this.$route.params.id;
-      },
       hasMoreThanOneModels() {
         return this.modelos.length > 0;
       },
@@ -84,22 +81,23 @@
 
     methods: {
       async loadDisciplina() {
-        const disciplina = await fetchDisciplinaById(this.routeId);
+        const disciplina = await fetchDisciplinaById(this.getRouteId);
         this.disciplina = disciplina;
         this.loadProfessorResponsavel();
-        this.modelos = await getModeloDocumentoByDisciplina(this.routeId);
+        this.modelos = await getModeloDocumentoByDisciplina(this.getRouteId);
 
         this.loadAlunosByDisciplina();
       },
       async loadProfessorResponsavel() {
-        const response = await fetchProfessorByDisciplinaId(this.routeId);
+        const response = await fetchProfessorByDisciplinaId(this.getRouteId);
         this.professor = response;
       },
       async loadAlunosByDisciplina() {
-        const response = await fetchAlunosByDisciplina(this.routeId);
+        const response = await fetchAlunosByDisciplina(this.getRouteId);
         this.alunos = response;
       },
     },
+
     mounted() {
       this.loadDisciplina();
     },

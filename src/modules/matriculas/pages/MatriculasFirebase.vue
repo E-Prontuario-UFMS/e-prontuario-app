@@ -7,7 +7,13 @@
         Matricular Aluno
       </v-btn>
     </v-row>
-    <v-card class="my-5 mx-4"> </v-card>
+    <v-card class="my-5 mx-4">
+      <v-data-table
+        :headers="headers"
+        :options="options"
+        :items="matriculas"
+      ></v-data-table>
+    </v-card>
     <e-overlay :loading="loading"></e-overlay>
   </v-container>
 </template>
@@ -16,19 +22,20 @@
   import { routerMixin, loadingMixin } from "@/mixins";
   import ETitle from "@/shared/components/ETitle.vue";
   import EOverlay from "@/shared/components/EOverlay.vue";
+  import { efireMixin } from "../../../mixins";
 
   export default {
-    mixins: [routerMixin, loadingMixin],
+    mixins: [routerMixin, loadingMixin, efireMixin],
     components: { ETitle, EOverlay },
     data: () => ({
       loading: false,
-      page: 0,
-      expanded: [],
       headers: [
         {
           text: "Academico",
           value: "academico.nome",
         },
+        { text: "Disciplina" },
+        { text: "Matriculado em" },
       ],
       options: {},
     }),
