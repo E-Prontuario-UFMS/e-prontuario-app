@@ -17,10 +17,10 @@ export async function getModeloDocumentoByDisciplina(disciplinaId) {
     .then(snapshot => snapshot.data());
 
   const modelosLoaded = [];
-  await modelos.map(async ({ id }) => {
+  await modelos.forEach(async ({ id }) => {
     const modelo = await getModeloDocumentoBySlug(id);
-    modelosLoaded.push(modelo);
+    modelosLoaded.push({ ...modelo, id });
   });
-  console.log(modelosLoaded);
+
   return modelosLoaded;
 }

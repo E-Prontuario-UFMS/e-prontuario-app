@@ -5,6 +5,7 @@ import { routes as professores } from "../professores";
 import { routes as configuracoes } from "../configuracoes";
 import { routes as academicos } from "../academicos";
 import { routes as matriculas } from "../matriculas";
+import { routes as feedback } from "../feedback";
 
 export default [
   {
@@ -19,6 +20,7 @@ export default [
       ...configuracoes,
       ...academicos,
       ...matriculas,
+      ...feedback,
       {
         path: "/",
         name: "Home",

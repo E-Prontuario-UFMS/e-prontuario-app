@@ -24,4 +24,9 @@ export default [
     name: "DocumentoPreenchidoComId",
     component: () => import("./pages/DocumentoPreenchidoIdFirebase"),
   },
+  {
+    path: "alocar-documento/:id",
+    name: "AlocarDocumento",
+    component: () => import("./pages/AlocarDocumentoFirebase.vue"),
+  },
 ];

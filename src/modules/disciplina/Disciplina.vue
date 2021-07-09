@@ -26,7 +26,13 @@
         Modelos Relacionados
       </v-card-title>
       <v-list>
-        <v-list-item v-for="modelo in modelos" :key="modelo.id">
+        <v-list-item
+          v-for="modelo in modelos"
+          :key="modelo.id"
+          ripple
+          shaped
+          dense
+        >
           <v-list-item-title>{{ modelo.titulo }}</v-list-item-title>
           <v-list-item-action>
             <v-btn icon>
@@ -36,6 +42,7 @@
         </v-list-item>
       </v-list>
     </v-card>
+    <alunos-matriculados :alunos="alunos"></alunos-matriculados>
   </v-container>
 </template>
 
@@ -45,10 +52,12 @@
   import {
     fetchDisciplinaById,
     fetchProfessorByDisciplinaId,
+    fetchAlunosByDisciplina,
   } from "../../firebase/services/disciplina";
   import { getModeloDocumentoByDisciplina } from "../../firebase/services/modeloDocumento";
+  import AlunosMatriculados from "./components/AlunosMatriculados.vue";
   export default {
-    components: { ETitle },
+    components: { ETitle, AlunosMatriculados },
     mixins: [routerMixin],
 
     data: () => ({
@@ -58,6 +67,7 @@
       professor: {},
       loading: true,
       modelos: [],
+      alunos: [],
     }),
 
     computed: {
@@ -78,10 +88,16 @@
         this.disciplina = disciplina;
         this.loadProfessorResponsavel();
         this.modelos = await getModeloDocumentoByDisciplina(this.routeId);
+
+        this.loadAlunosByDisciplina();
       },
       async loadProfessorResponsavel() {
         const response = await fetchProfessorByDisciplinaId(this.routeId);
         this.professor = response;
+      },
+      async loadAlunosByDisciplina() {
+        const response = await fetchAlunosByDisciplina(this.routeId);
+        this.alunos = response;
       },
     },
     mounted() {

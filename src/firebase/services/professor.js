@@ -1,4 +1,4 @@
-import { PROFESSORES } from "../../constants";
+import { DISCIPLINAS, PROFESSORES } from "../../constants";
 import { db, firebase } from "../../firebase";
 
 export async function addNewProfessor({ siap, nome }) {
@@ -25,18 +25,13 @@ export async function editarProfessor(id, professor) {
 }
 
 export async function addDisciplinaToProfessor(idProfessor, idDisciplina) {
-  idDisciplina;
-  const disciplinasDoProfessor = await db
-    .collection(PROFESSORES)
-    .doc(idProfessor)
-    .get()
-    .then(data => data.data());
-
-  disciplinasDoProfessor.map(disciplina => console.log(disciplina));
+  const discipinaRef = await db.collection(DISCIPLINAS).doc(idDisciplina);
   return await db
     .collection(PROFESSORES)
     .doc(idProfessor)
-    .update({});
+    .update({
+      disciplinas: firebase.firestore.FieldValue.arrayUnion(discipinaRef),
+    });
 }
 
 export async function fetchAllProfessores() {

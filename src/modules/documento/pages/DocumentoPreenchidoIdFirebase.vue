@@ -3,13 +3,15 @@
     <div style="display: contents">
       <e-title title="Documento" route="/home/documento"></e-title>
 
-      <v-row class="wrap">
+      <v-row>
         <v-col sm="12" md="12" lg="12">
           <documento-card
             :documentos="documentos"
             :preenchido="preenchido"
           ></documento-card>
         </v-col>
+      </v-row>
+      <v-row class="wrap">
         <v-col sm="12" md="6" lg="6">
           <academico-card :academico="academico"></academico-card>
         </v-col>
@@ -30,7 +32,7 @@
   import PacienteCard from "@/modules/documento/components/PacienteCard";
   import DocumentoCard from "@/modules/documento/components/DocumentoCard";
   import { getDocumentoPreenchidoById } from "../../../firebase/services/documento";
-  import { getAcademicoById } from "../../../firebase/services/academico";
+  import { getUserByAuthenticationId } from "../../../firebase/services/academico";
   import { getPacienteById } from "../../../firebase/services/paciente";
   import ETitle from "../../../shared/components/ETitle.vue";
 
@@ -54,12 +56,13 @@
       async fetchDocumentById() {
         const id = this.$route.params.id;
         const response = await getDocumentoPreenchidoById(id);
+        console.log(response);
         this.documentos = response.documento;
         this.preenchido = response.preenchido;
-        this.academico = await getAcademicoById(response.academico.id);
+        console.log(response);
+        this.academico = await getUserByAuthenticationId(response.academico.id);
         this.paciente = await getPacienteById(response.paciente.id);
         this.createdAt = response.createdAt;
-        console.log(this.documentos);
       },
     },
     mounted() {

@@ -63,9 +63,22 @@
                 >
                   Registrar
                 </v-btn>
-                <!-- <v-btn @click="googleLogin">google</v-btn> -->
               </v-layout>
             </v-card-actions>
+            <v-row justify="center my-2">
+              <div class="g-sign-in-button" @click="googleLogin">
+                <div class="content-wrapper">
+                  <div class="logo-wrapper">
+                    <img
+                      src="https://developers.google.com/identity/images/g-logo.png"
+                    />
+                  </div>
+                  <span class="text-container">
+                    <span>Faça login com Google</span>
+                  </span>
+                </div>
+              </div>
+            </v-row>
             <v-row justify="center" class="ma-2">
               <router-link to="esqueci-a-senha">
                 Esqueceu a Senha ?
@@ -126,7 +139,9 @@
           photoUrl: user.photoUrl,
           phoneNumber: user.phoneNumber,
           isProfessor: firebaseUser.isProfessor,
+          uid: user.uid,
         });
+        this.throwSuccess("Login Bem Sucedido");
         this.$router.push("/home");
       },
 
@@ -138,25 +153,10 @@
           .auth()
           .signInWithPopup(provider)
           .then(result => {
-            /** @type {firebase.auth.OAuthCredential} */
-            // var credential = result.credential;
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            // var token = credential.accessToken;
-            // The signed-in user info.
-            // var user = result.user;
-            // ...
-            console.log(result);
+            this.handleSuccessfullyLogin(result);
           })
           .catch(error => {
             this.throwError(error);
-            // Handle Errors here.
-            // var errorCode = error.code;
-            // var errorMessage = error.message;
-            // The email of the user's account used.
-            // var email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
-            // var credential = error.credential;
-            // ...
           });
       },
     },
@@ -171,5 +171,60 @@
   }
   .login-title h1 {
     color: #0088b7;
+  }
+  .g-sign-in-button {
+    margin: 10px;
+    display: inline-block;
+    width: 240px;
+    height: 50px;
+    background-color: #4285f4;
+    color: #fff;
+    border-radius: 1px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+    transition: background-color 0.218s, border-color 0.218s, box-shadow 0.218s;
+  }
+
+  .g-sign-in-button:hover {
+    cursor: pointer;
+    -webkit-box-shadow: 0 0 3px 3px rgba(66, 133, 244, 0.3);
+    box-shadow: 0 0 3px 3px rgba(66, 133, 244, 0.3);
+  }
+
+  .g-sign-in-button:active {
+    background-color: #3367d6;
+    transition: background-color 0.2s;
+  }
+
+  .g-sign-in-button .content-wrapper {
+    height: 100%;
+    width: 100%;
+    border: 1px solid transparent;
+  }
+
+  .g-sign-in-button img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .g-sign-in-button .logo-wrapper {
+    padding: 15px;
+    background: #fff;
+    width: 48px;
+    height: 100%;
+    border-radius: 1px;
+    display: inline-block;
+  }
+
+  .g-sign-in-button .text-container {
+    font-family: Roboto, arial, sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.21px;
+    font-size: 16px;
+    line-height: 48px;
+    vertical-align: top;
+    border: none;
+    display: inline-block;
+    text-align: center;
+    width: 180px;
   }
 </style>

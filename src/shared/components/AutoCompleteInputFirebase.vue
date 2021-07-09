@@ -29,7 +29,6 @@
     }),
     watch: {
       select(val) {
-        console.log(val);
         this.search = "";
         if (this.$route.path !== `/home/documento/${val.id}`) {
           this.$router.push(`/home/documento/${val.id}`);

@@ -11,15 +11,6 @@
 
       <v-tabs-items v-model="tab">
         <v-tab-item>
-          <v-row justify="end" v-if="isProfessor">
-            <v-btn
-              color="success"
-              class="my-3 mx-5"
-              @click="goTo('novo-documento')"
-            >
-              Adicionar Novo
-            </v-btn>
-          </v-row>
           <v-data-table
             :headers="headers"
             :items="disciplinas"
@@ -29,12 +20,12 @@
             <template v-slot:expanded-item="{ headers, item }">
               <td :colspan="headers.length" v-if="item.modelos.length > 0">
                 <v-list-item
-                  class="pa-2 ma-5"
-                  elevation="10"
                   v-for="modelo in item.modelos"
                   :key="modelo.id"
                   ripple
                   raised
+                  dense
+                  @click="goTo('documento/' + modelo.id)"
                 >
                   <v-list-item-title>
                     {{ modelo.titulo }}
@@ -73,6 +64,16 @@
         </v-tab-item>
       </v-tabs-items>
     </v-card>
+    <div class="fixedButton">
+      <v-btn
+        v-if="isProfessor"
+        fab
+        @click="goTo('novo-documento')"
+        color="success"
+      >
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+    </div>
   </v-container>
 </template>
 
@@ -99,7 +100,7 @@
       disciplinas: [],
       tab: null,
       tabsTitles: [
-        "Documentos",
+        "Documentos Por Disciplina",
         "Documentos Preenchidos",
         "Todos Modelos",
         "Designar Documentos",
@@ -113,3 +114,11 @@
     }),
   };
 </script>
+
+<style scoped>
+  .fixedButton {
+    position: absolute;
+    right: 5vw;
+    bottom: 5vh;
+  }
+</style>

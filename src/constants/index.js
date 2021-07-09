@@ -29,3 +29,5 @@ export const DOCUMENTOS = "documentos";
 export const MODELOS = "modelos";
 export const PACIENTES = "pacientes";
 export const ACADEMICOS = "academicos";
+export const MATRICULA = "matricula";
+export const FEEDBACK = "feedback";

@@ -68,17 +68,19 @@
 </template>
 
 <script>
-  import { efireMixin } from "@/mixins";
+  import { fetchDocumentosPreenchidos } from "../../../firebase/services/documento";
+  import { routerMixin } from "../../../mixins";
   export default {
     name: "DocumentosPreenchidos",
-    mixins: [efireMixin],
+    mixins: [routerMixin],
     data: () => ({
       loading: false,
       documentosPreenchidos: [],
+      documentos: [],
       headers: [
         {
           text: "Aluno",
-          value: "academico.nome",
+          value: "nome",
           align: "start",
         },
         {
@@ -93,21 +95,19 @@
       ],
     }),
     methods: {
-      goBack() {
-        this.$router.go(-1);
-      },
-      getDocumentosPreenchidos() {
-        this.loading = true;
-      },
       acessarDocumento(item) {
         this.$router.push({
           name: "DocumentoPreenchidoComId",
           params: { id: item.id },
         });
       },
+      async loadDocumentosPreenchidos() {
+        this.documentos = await fetchDocumentosPreenchidos();
+        console.log(this.documentos);
+      },
     },
     mounted() {
-      console.log(this.documentos);
+      this.loadDocumentosPreenchidos();
     },
   };
 </script>

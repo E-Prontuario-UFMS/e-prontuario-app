@@ -43,6 +43,11 @@
               Matriculas
             </v-list-item-title>
           </v-list-item>
+          <v-list-item>
+            <v-list-item-title>
+              Sugestões
+            </v-list-item-title>
+          </v-list-item>
           <v-list-item v-if="isProfessor">
             <v-list-item-title>Configurações </v-list-item-title>
           </v-list-item>
@@ -118,10 +123,14 @@
             break;
 
           case 5:
-            this.$router.replace("/configuracoes");
+            this.$router.replace("/home/feedback");
             break;
 
           case 6:
+            this.$router.replace("/configuracoes");
+            break;
+
+          case 7:
             this.doLogout();
             break;
           default:

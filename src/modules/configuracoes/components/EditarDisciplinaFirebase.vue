@@ -81,15 +81,19 @@
       async handleEdit() {
         if (this.$refs.formRef.validate()) {
           const { id } = this.$route.params;
-          await db
-            .collection(DISCIPLINAS)
-            .doc(id)
-            .update({
-              ...this.disciplina,
-            });
-          await addDisciplinaToProfessor(this.professorAutoComplete.id, id);
-          this.throwSuccess("Disciplina Editada com sucesso 🙋");
-          this.goBack();
+          try {
+            await db
+              .collection(DISCIPLINAS)
+              .doc(id)
+              .update({
+                ...this.disciplina,
+              });
+            await addDisciplinaToProfessor(this.professorAutoComplete.id, id);
+            this.throwSuccess("Disciplina Editada com sucesso 🙋");
+            this.goBack();
+          } catch (err) {
+            this.throwError("Algo deu errado: " + err);
+          }
         }
       },
       async fillProfessor() {
