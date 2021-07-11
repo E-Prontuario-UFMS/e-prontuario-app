@@ -39,12 +39,13 @@
     fetchAlunosByDisciplina,
     fetchDisciplinaById,
   } from "../../../firebase/services/disciplina";
-  import { routerMixin } from "../../../mixins";
+  import { routerMixin, toastMixin } from "../../../mixins";
   import AcademicosTable from "@/shared/components/AcademicosTable.vue";
   import ETitle from "../../../shared/components/ETitle.vue";
   import { fetchAcademicoByRga } from "../../../firebase/services/academico";
+  import { matriculaAluno } from "../../../firebase/services/matricula";
   export default {
-    mixins: [routerMixin],
+    mixins: [routerMixin, toastMixin],
     components: { ETitle, AcademicosTable },
     computed: {
       routeTitle() {
@@ -56,7 +57,7 @@
     },
     data: () => ({
       form: false,
-      rga: "201608030164",
+      rga: "",
       searchedAcademico: {},
       disciplina: {},
       academicosMatriculados: [],
@@ -75,7 +76,13 @@
         this.searchedAcademico = await fetchAcademicoByRga(this.rga);
       },
       async handleMatricularAcademico() {
-        console.log(this.searchedAcademico);
+        try {
+          await matriculaAluno(this.searchedAcademico.id, this.getRouteId);
+          this.throwSuccess("Aluno Matriculado");
+          this.loadAcademicosMatriculados();
+        } catch (err) {
+          this.throwError("Algo deu errado");
+        }
       },
     },
     mounted() {
