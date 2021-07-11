@@ -23,12 +23,14 @@
   import ETitle from "@/shared/components/ETitle.vue";
   import EOverlay from "@/shared/components/EOverlay.vue";
   import { efireMixin } from "../../../mixins";
+  import { getAllMatriculas } from "../../../firebase/services/matricula";
 
   export default {
     mixins: [routerMixin, loadingMixin, efireMixin],
     components: { ETitle, EOverlay },
     data: () => ({
       loading: false,
+      matriculas: [],
       headers: [
         {
           text: "Academico",
@@ -39,7 +41,16 @@
       ],
       options: {},
     }),
-    methods: {},
+    methods: {
+      async loadMatriculas() {
+        const response = await getAllMatriculas();
+        console.log(response);
+        this.matriculas = response;
+      },
+    },
+    mounted() {
+      this.loadMatriculas();
+    },
   };
 </script>
 

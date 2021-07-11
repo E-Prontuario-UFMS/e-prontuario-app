@@ -19,4 +19,9 @@ export default [
     name: "DesignarProfessor",
     component: () => import("./pages/DesignarProfessor.vue"),
   },
+  {
+    path: "/configuracoes/disciplinas/:id/alocar-aluno",
+    name: "AlocarAlunoDisciplinaId",
+    component: () => import("./pages/AlocarAlunoDisciplinaId.vue"),
+  },
 ];

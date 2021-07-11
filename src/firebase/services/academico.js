@@ -37,3 +37,16 @@ export async function getAllDisciplinasByAcademicoId(id) {
 
   return disciplinas;
 }
+
+export async function fetchAcademicoByRga(rga) {
+  return await db
+    .collection(ACADEMICOS)
+    .where("rga", "==", rga)
+    .get()
+    .then(snapshot =>
+      snapshot.docs[0].ref.get().then(data => {
+        const academico = { ...data.data(), id: data.id };
+        return academico;
+      }),
+    );
+}

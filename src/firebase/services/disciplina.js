@@ -80,3 +80,10 @@ export async function addAlunoInDisciplina(disciplinaId, alunoId) {
     .then(data => data)
     .catch(err => Error(err));
 }
+
+export async function deleteDisicplina(id) {
+  return await db
+    .collection(DISCIPLINAS)
+    .doc(id)
+    .delete();
+}

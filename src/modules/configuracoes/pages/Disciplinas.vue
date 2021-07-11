@@ -18,7 +18,6 @@
 </template>
 
 <script>
-  // TODO: verificar se está atualizando conforme crio novas disciplinas
   import { mapGetters } from "vuex";
   import CadastrarDisciplinaFirebase from "../components/CadastrarDisciplinaFirebase.vue";
   import DisciplinasCadastradasFirebase from "../components/DisciplinasCadastradasFirebase.vue";

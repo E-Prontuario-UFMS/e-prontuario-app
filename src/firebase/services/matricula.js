@@ -1,5 +1,6 @@
 import { MATRICULA } from "../../constants";
 import { db } from "../../firebase";
+import { getAcademicoById } from "./academico";
 import { addAlunoInDisciplina } from "./disciplina";
 
 export async function matriculaAluno(academicoId, disciplinaId) {
@@ -14,3 +15,19 @@ export async function matriculaAluno(academicoId, disciplinaId) {
 // export async function isAlunoMatriculado(academicoId, disciplinaId) {
 //   return db.collection(MATRICULA).where("disciplina", "==", "");
 // }
+
+export async function getAllMatriculas() {
+  const matriculasRef = await db
+    .collection(MATRICULA)
+    .get()
+    .then(snapshot => snapshot.docs);
+
+  const matriculas = [];
+
+  matriculasRef.forEach(async matricula => {
+    const academico = await getAcademicoById(matricula.academico.id);
+    matriculas.push({ ...academico });
+  });
+
+  return matriculas;
+}

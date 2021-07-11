@@ -47,6 +47,21 @@
                 </template>
                 <span>Deletar Disciplina</span>
               </v-tooltip>
+              <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    icon
+                    @click="
+                      goTo(`/configuracoes/disciplinas/${item.id}/alocar-aluno`)
+                    "
+                  >
+                    <v-icon color="success" dark v-bind="attrs" v-on="on">
+                      mdi-arrow-up
+                    </v-icon>
+                  </v-btn>
+                </template>
+                <span>Matricular Alunos</span>
+              </v-tooltip>
             </div>
           </td>
         </tr>
@@ -59,8 +74,6 @@
 <script>
   import EOverlay from "../../../shared/components/EOverlay.vue";
   import { routerMixin, efireMixin } from "@/mixins";
-  import { db } from "../../../firebase";
-  import { DISCIPLINAS } from "../../../constants";
   export default {
     mixins: [routerMixin, efireMixin],
     components: { EOverlay },
@@ -75,10 +88,7 @@
     }),
     methods: {
       async handleDeleteDisciplina(item) {
-        await db
-          .collection(DISCIPLINAS)
-          .doc(item.id)
-          .delete();
+        console.log(item);
       },
     },
     mounted() {
