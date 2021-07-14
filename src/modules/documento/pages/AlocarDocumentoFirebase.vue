@@ -7,7 +7,23 @@
     </v-card>
     <v-card>
       <v-card-title>
-        Modelos
+        <v-row>
+          <v-col>
+            Modelos
+          </v-col>
+          <v-col>
+            <v-autocomplete
+              outlined
+              label="Pesquise"
+              :items="allocatedModels"
+              item-text="titulo"
+              return-object
+              class="white--text"
+              prepend-icon="mdi-delete"
+              v-model="modelAllocatedSearch"
+            />
+          </v-col>
+        </v-row>
       </v-card-title>
       <v-card-subtitle v-if="disciplinaHaveMoreThanOneModelo">
         Modelos atualmente alocadas
@@ -15,8 +31,28 @@
       <v-card-subtitle v-if="!disciplinaHaveMoreThanOneModelo">
         Não existe modelos alocados para essa disciplina
       </v-card-subtitle>
-      <v-list>
-        <v-list-item v-for="modelo in modelosAlocados" :key="modelo.id">
+      <v-list v-if="!hasTextInAllocatedSearch">
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>
+              {{ modelAllocatedSearch.titulo }}
+            </v-list-item-title>
+          </v-list-item-content>
+
+          <v-list-item-action>
+            <v-btn
+              fab
+              small
+              @click="handleDelete(modelAllocatedSearch.id)"
+              color="error"
+            >
+              <v-icon>mdi-minus</v-icon>
+            </v-btn>
+          </v-list-item-action>
+        </v-list-item>
+      </v-list>
+      <v-list v-if="hasTextInAllocatedSearch">
+        <v-list-item v-for="modelo in allocatedModels" :key="modelo.id">
           <v-list-item-content>
             <v-list-item-title>
               {{ modelo.titulo }}
@@ -66,23 +102,28 @@
     mixins: [efireMixin, toastMixin],
     data: () => ({
       disciplina: {},
-      modelosAlocados: [],
+      allocatedModels: [],
+      modelAllocatedSearch: "",
+      modelAvailableSearch: "",
+      modelAllocated: {},
     }),
     computed: {
       getDisciplinaId() {
         return this.$route.params.id;
       },
       disciplinaHaveMoreThanOneModelo() {
-        return this.modelosAlocados.length > 0;
+        return this.allocatedModels.length > 0;
+      },
+      hasTextInAllocatedSearch() {
+        return !this.modelAllocatedSearch;
       },
     },
     methods: {
       async loadDisciplina() {
         this.disciplina = await fetchDisciplinaById(this.getDisciplinaId);
-        this.modelosAlocados = await getModeloDocumentoByDisciplina(
+        this.allocatedModels = await getModeloDocumentoByDisciplina(
           this.getDisciplinaId,
         );
-        console.log(this.modelosAlocados);
       },
       async handleAlocar(id) {
         const data = await addModeloInDisciplina(this.getDisciplinaId, id);
