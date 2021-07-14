@@ -3,17 +3,18 @@
     <e-title title="Preencher Documento" route="/home/documento"></e-title>
     <v-card class="my-6">
       <v-card-title>
-        {{ documento.titulo }}
+        {{ documentTitle }}
       </v-card-title>
 
       <v-card-text>
         <v-form v-model="valid" ref="formRef">
-          <v-jsf v-model="textModel" :schema="textSchema"></v-jsf>
-          <v-jsf v-model="dataModel" :schema="dataSchema"></v-jsf>
-          <v-jsf v-model="numberModel" :schema="numberSchema"></v-jsf>
-          <v-jsf v-model="booleanModel" :schema="booleanSchema"></v-jsf>
-
-          <v-row class="mx-6">
+          <v-row class="mx-2 my-2">
+            <v-jsf v-model="textModel" :schema="textSchema" />
+            <v-jsf v-model="dataModel" :schema="dataSchema" />
+            <v-jsf v-model="numberModel" :schema="numberSchema" />
+            <v-jsf v-model="booleanModel" :schema="booleanSchema" />
+          </v-row>
+          <v-row class="mx-2 my-2">
             <v-select
               :items="pacientes"
               item-text="nome"
@@ -26,7 +27,7 @@
             >
             </v-select>
           </v-row>
-          <v-row justify="end" class="ma-6">
+          <v-row justify="end" class="mx-2 my-2">
             <v-btn color="success" @click="handleFinish" :disabled="!valid">
               Concluir
             </v-btn>
@@ -70,6 +71,9 @@
     }),
     computed: {
       ...mapState("login", ["user"]),
+      documentTitle() {
+        return this.documento.titulo;
+      },
     },
     methods: {
       async loadData() {

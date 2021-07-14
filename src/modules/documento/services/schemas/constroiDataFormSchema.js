@@ -24,7 +24,7 @@ const constroiItemProperty = controleItem => {
         "x-props": {
           outlined: true,
         },
-        "x-class": "ml-4 mr-4 mx-auto col-sm-5 col-lg-5",
+        "x-class": "col-sm-5 col-lg-5",
       };
   }
 };

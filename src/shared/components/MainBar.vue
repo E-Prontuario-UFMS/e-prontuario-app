@@ -14,6 +14,14 @@
 
     <v-navigation-drawer app width="300" v-model="drawer">
       <v-card height="128" width="100%">
+        <v-avatar size="48">
+          <img
+            v-if="user.photoUrl"
+            :src="user.photoUrl"
+            alt="Profile do Usuario"
+          />
+          <v-icon v-else>mdi-account-circle</v-icon>
+        </v-avatar>
         <v-card-title>{{ user && user.displayName }} </v-card-title>
         <v-card-subtitle>{{ user && user.email }}</v-card-subtitle>
       </v-card>
@@ -38,7 +46,7 @@
               Disciplinas
             </v-list-item-title>
           </v-list-item>
-          <v-list-item v-if="isProfessor">
+          <v-list-item v-if="isProfessor" v-show="false">
             <v-list-item-title>
               Matriculas
             </v-list-item-title>

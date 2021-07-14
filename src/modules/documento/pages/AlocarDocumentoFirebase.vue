@@ -19,8 +19,8 @@
               item-text="titulo"
               return-object
               class="white--text"
-              prepend-icon="mdi-delete"
               v-model="modelAllocatedSearch"
+              clearable
             />
           </v-col>
         </v-row>
@@ -68,13 +68,48 @@
       </v-list>
     </v-card>
     <v-card class="my-4">
-      <v-card-title>Modelos de Documento Disponiveis</v-card-title>
-      <v-list>
+      <v-card-title>
+        <v-row>
+          <v-col>
+            Modelos de Documento Disponiveis
+          </v-col>
+          <v-col>
+            <v-autocomplete
+              outlined
+              label="Pesquise"
+              :items="modelos"
+              item-text="titulo"
+              return-object
+              class="white--text"
+              v-model="modelAvailableSearch"
+              clearable
+            />
+          </v-col>
+        </v-row>
+      </v-card-title>
+      <v-list v-if="hasTextInAvailableSearch">
         <v-list-item v-for="modelo in modelos" :key="modelo.id" dense ripple>
           <v-list-item-content>
             <v-list-item-title>{{ modelo.titulo }}</v-list-item-title>
             <v-list-item-subtitle>
               {{ modelo.descricao }}
+            </v-list-item-subtitle>
+          </v-list-item-content>
+          <v-list-item-action>
+            <v-btn color="success" fab small @click="handleAlocar(modelo.id)">
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </v-list-item-action>
+        </v-list-item>
+      </v-list>
+      <v-list v-if="!hasTextInAvailableSearch">
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>
+              {{ modelAvailableSearch.titulo }}
+            </v-list-item-title>
+            <v-list-item-subtitle>
+              {{ modelAvailableSearch.descricao }}
             </v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
@@ -106,6 +141,8 @@
       modelAllocatedSearch: "",
       modelAvailableSearch: "",
       modelAllocated: {},
+      modelAvailable: {},
+      availableModels: [],
     }),
     computed: {
       getDisciplinaId() {
@@ -116,6 +153,9 @@
       },
       hasTextInAllocatedSearch() {
         return !this.modelAllocatedSearch;
+      },
+      hasTextInAvailableSearch() {
+        return !this.modelAvailableSearch;
       },
     },
     methods: {

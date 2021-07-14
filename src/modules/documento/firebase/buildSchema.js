@@ -19,12 +19,12 @@ const constroiTextItemProperty = controleItem => {
     case "STRING":
       return {
         type: "string",
-
         title: controleItem.tituloItemDocumento,
         "x-props": {
           outlined: true,
+          clearable: true,
         },
-        "x-class": "col-lg-5 col-sm-11",
+        "x-class": "col-sm-12 col-md-12",
       };
   }
 };
@@ -54,7 +54,7 @@ const constroiDataItemProperty = controleItem => {
         "x-props": {
           outlined: true,
         },
-        "x-class": "ml-4 mr-4 mx-auto col-sm-5 col-lg-5",
+        "x-class": "col-sm-12 col-md-4",
       };
   }
 };
@@ -79,7 +79,7 @@ const constroiBooleanItemProperty = controleItem => {
         type: "boolean",
         "x-display": "switch",
         title: controleItem.tituloItemDocumento,
-        "x-class": "ml-4 mr-4 col-sm-6 col-md-4",
+        "x-class": "col-sm-6 col-md-2",
       };
   }
 };
@@ -106,7 +106,7 @@ const constroiNumberItemProperty = controleItem => {
         "x-props": {
           outlined: true,
         },
-        "x-class": "ml-4 mr-4 col-sm-6 col-md-4",
+        "x-class": "col-sm-6 col-lg-6",
       };
   }
 };

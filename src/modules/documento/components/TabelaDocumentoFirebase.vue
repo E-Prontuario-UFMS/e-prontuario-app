@@ -2,12 +2,15 @@
   <v-card>
     <v-row class="d-flex justify-center pl-6 pr-6 pt-6" fluid dense>
       <v-col>
-        <v-text-field
+        <v-autocomplete
           dense
-          label="Pesquise"
+          :items="modelos"
+          label="Pesquise pelo titulo"
           outlined
+          item-text="titulo"
           append-icon="mdi-magnify"
           v-model="search"
+          clearable
         />
       </v-col>
       <v-col cols="3">
@@ -44,6 +47,7 @@
                   :headers="headers"
                   :items="modelos"
                   class="elevation-1"
+                  :search="search"
                 >
                   <template v-slot:item.acoes="{ item }">
                     <tr>
