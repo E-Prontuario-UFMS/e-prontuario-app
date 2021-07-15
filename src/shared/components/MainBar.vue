@@ -1,18 +1,23 @@
 <template>
   <div v-if="!isLogin">
     <v-app-bar app clipped-right flat height="72" color="primary" dark>
-      <v-btn icon @click="toogleDrawer" app>
+      <v-btn icon @click="toggleDrawer" app>
         <v-icon>
           mdi-menu
         </v-icon>
       </v-btn>
-      <v-spacer></v-spacer>
+      <v-spacer />
 
-      <auto-complete-input-firebase></auto-complete-input-firebase>
+      <auto-complete-input-firebase />
       <switch-theme />
     </v-app-bar>
 
-    <v-navigation-drawer app width="300" v-model="drawer">
+    <v-navigation-drawer
+      app
+      width="300"
+      :value="drawerState"
+      @input="ActionToggleDrawer"
+    >
       <v-card height="128" width="100%">
         <v-avatar size="48">
           <img
@@ -79,11 +84,11 @@
       AutoCompleteInputFirebase,
     },
     data: () => ({
-      drawer: true,
       isLogin: true,
       selectedItem: 0,
     }),
     computed: {
+      ...mapState("shared", ["drawerState"]),
       ...mapState("login", ["user"]),
       isProfessor() {
         return true;
@@ -92,13 +97,14 @@
     methods: {
       ...mapActions("login", ["ActionDeleteGlobalUser"]),
       ...mapActions("documento", ["ActionSetDocumento"]),
+      ...mapActions("shared", ["ActionToggleDrawer"]),
       doLogout() {
         this.ActionDeleteGlobalUser();
         this.ActionSetDocumento({});
         this.$router.push("/");
       },
-      toogleDrawer() {
-        this.drawer = !this.drawer;
+      toggleDrawer() {
+        this.ActionToggleDrawer(!this.drawerState);
       },
       toogleLogin() {
         this.isLogin = this.$router.currentRoute.fullPath === "/";

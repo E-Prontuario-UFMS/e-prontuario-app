@@ -1,0 +1,1 @@
+export const TOGGLE_DRAWER = "SHARED/TOGGLE_DRAWER";
