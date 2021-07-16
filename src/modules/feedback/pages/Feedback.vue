@@ -9,7 +9,11 @@
         Nos envie sua sugestão de como podemos melhorar esse sistema !
       </v-card-subtitle>
 
-      <v-form @submit.prevent="handleFormSubmit" v-model="isFormValid">
+      <v-form
+        @submit.prevent="handleFormSubmit"
+        v-model="isFormValid"
+        ref="formRef"
+      >
         <v-row class="pa-5">
           <v-text-field
             label="Digite seu email"
@@ -42,9 +46,11 @@
 <script>
   import { mapGetters } from "vuex";
   import { sendFeedback } from "../../../firebase/services/feedback";
+  import { toastMixin } from "../../../mixins";
   import ETitle from "../../../shared/components/ETitle.vue";
   export default {
     components: { ETitle },
+    mixins: [toastMixin],
     data: () => ({
       isFormValid: false,
       feedbackRules: {
@@ -61,7 +67,11 @@
       async handleFormSubmit() {
         const { email, feedback } = this;
         const createdAt = new Date();
-        await sendFeedback({ email, feedback, createdAt });
+        const data = await sendFeedback({ email, feedback, createdAt });
+        this.$refs.formRef.reset();
+        data instanceof Error
+          ? this.throwError("Algo deu errado 😞")
+          : this.throwSuccess("Feedback Enviado 🥳");
       },
     },
     mounted() {
