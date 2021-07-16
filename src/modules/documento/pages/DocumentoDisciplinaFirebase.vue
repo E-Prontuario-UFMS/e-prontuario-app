@@ -4,8 +4,13 @@
 
     <v-card class="my-5 mx-auto">
       <v-tabs v-model="tab">
-        <v-tab v-for="tabTitle in tabsTitles" :key="tabTitle">
-          {{ tabTitle }}
+        <v-tab
+          v-for="currentTab in tabs"
+          :key="currentTab.name"
+          :disabled="!currentTab.available"
+          :hidden="currentTab.hidden"
+        >
+          {{ currentTab.name }}
         </v-tab>
       </v-tabs>
 
@@ -53,6 +58,7 @@
             </template>
           </v-data-table>
         </v-tab-item>
+        <v-tab-item> <meus-documentos></meus-documentos> </v-tab-item>
         <v-tab-item>
           <documentos-preenchidos-firebase></documentos-preenchidos-firebase>
         </v-tab-item>
@@ -82,6 +88,7 @@
   import { efireMixin, routerMixin } from "../../../mixins";
   import ETitle from "../../../shared/components/ETitle.vue";
   import DesignarModelo from "../components/DesignarModelo.vue";
+  import MeusDocumentos from "../components/MeusDocumentos.vue";
   import TabelaDocumentoFirebase from "../components/TabelaDocumentoFirebase.vue";
   import DocumentosPreenchidosFirebase from "./DocumentosPreenchidosFirebase.vue";
 
@@ -92,26 +99,50 @@
       DocumentosPreenchidosFirebase,
       TabelaDocumentoFirebase,
       DesignarModelo,
-    },
-    computed: {
-      ...mapGetters("login", ["isProfessor"]),
+      MeusDocumentos,
     },
     data: () => ({
       disciplinas: [],
-      tab: null,
-      tabsTitles: [
-        "Documentos Por Disciplina",
-        "Documentos Preenchidos",
-        "Todos Modelos",
-        "Designar Documentos",
-      ],
-      headers: [
-        {
-          text: "Nome",
-          value: "nome",
-        },
-      ],
+      tab: 0,
     }),
+    computed: {
+      ...mapGetters("login", ["isProfessor"]),
+
+      headers() {
+        return [
+          {
+            text: "Nome",
+            value: "nome",
+          },
+        ];
+      },
+      tabs() {
+        return [
+          {
+            name: "Documentos Por Disciplina",
+            available: true,
+          },
+          {
+            name: "Meus Documentos Preenchidos",
+            available: true,
+            hidden: this.isProfessor,
+          },
+          {
+            name: "Documentos Preenchidos",
+            available: this.isProfessor,
+            hidden: !this.isProfessor,
+          },
+          {
+            name: "Todos Modelos",
+            available: this.isProfessor,
+          },
+          {
+            name: "Designar Documentos",
+            available: this.isProfessor,
+          },
+        ];
+      },
+    },
   };
 </script>
 

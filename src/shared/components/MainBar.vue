@@ -33,35 +33,35 @@
 
       <v-list shaped>
         <v-list-item-group v-model="selectedItem">
-          <v-list-item>
+          <v-list-item value="HOME">
             <v-list-item-title>
               Home
             </v-list-item-title>
           </v-list-item>
-          <v-list-item>
+          <v-list-item value="DOCUMENTOS">
             <v-list-item-title>
               Documento
             </v-list-item-title>
           </v-list-item>
-          <v-list-item>
-            <v-list-item-title>Paciente</v-list-item-title>
+          <v-list-item value="PACIENTES">
+            <v-list-item-title>Pacientes</v-list-item-title>
           </v-list-item>
-          <v-list-item v-if="isProfessor">
+          <v-list-item value="DISCIPLINAS">
             <v-list-item-title>
               Disciplinas
             </v-list-item-title>
           </v-list-item>
-          <v-list-item v-if="isProfessor" v-show="false">
+          <v-list-item v-if="isProfessor" v-show="false" value="MATRICULAS">
             <v-list-item-title>
               Matriculas
             </v-list-item-title>
           </v-list-item>
-          <v-list-item>
+          <v-list-item value="SUGESTOES">
             <v-list-item-title>
               Sugestões
             </v-list-item-title>
           </v-list-item>
-          <v-list-item v-if="isProfessor">
+          <v-list-item v-if="isProfessor" value="CONFIGURACOES">
             <v-list-item-title>Configurações </v-list-item-title>
           </v-list-item>
           <v-list-item @click="doLogout">
@@ -75,7 +75,7 @@
 
 <script>
   import SwitchTheme from "./SwitchTheme.vue";
-  import { mapActions, mapState } from "vuex";
+  import { mapActions, mapGetters, mapState } from "vuex";
   import AutoCompleteInputFirebase from "./AutoCompleteInputFirebase.vue";
 
   export default {
@@ -85,14 +85,12 @@
     },
     data: () => ({
       isLogin: true,
-      selectedItem: 0,
+      selectedItem: "HOME",
     }),
     computed: {
       ...mapState("shared", ["drawerState"]),
       ...mapState("login", ["user"]),
-      isProfessor() {
-        return true;
-      },
+      ...mapGetters("login", ["isProfessor"]),
     },
     methods: {
       ...mapActions("login", ["ActionDeleteGlobalUser"]),
@@ -109,47 +107,25 @@
       toogleLogin() {
         this.isLogin = this.$router.currentRoute.fullPath === "/";
       },
+      routing(value) {
+        const ROUTES = {
+          HOME: "/home",
+          DOCUMENTOS: "/home/documento",
+          PACIENTES: "/home/pacientes",
+          DISCIPLINAS: "/home/disciplinas",
+          CONFIGURACOES: "/configuracoes",
+          SUGESTOES: "/home/feedback",
+        };
+
+        this.$router.replace(ROUTES[value]);
+      },
     },
     watch: {
       $route() {
         this.toogleLogin();
       },
       selectedItem(val) {
-        switch (val) {
-          case 0:
-            this.$router.replace({ name: "Home" });
-            break;
-
-          case 1:
-            this.$router.replace({ name: "Documento" });
-            break;
-
-          case 2:
-            this.$router.replace({ name: "Pacientes" });
-            break;
-
-          case 3:
-            this.$router.replace({ name: "Disciplinas" });
-            break;
-
-          case 4:
-            this.$router.replace("/matriculas");
-            break;
-
-          case 5:
-            this.$router.replace("/home/feedback");
-            break;
-
-          case 6:
-            this.$router.replace("/configuracoes");
-            break;
-
-          case 7:
-            this.doLogout();
-            break;
-          default:
-            break;
-        }
+        this.routing(val);
       },
     },
     mounted() {
@@ -157,5 +133,3 @@
     },
   };
 </script>
-
-<style></style>

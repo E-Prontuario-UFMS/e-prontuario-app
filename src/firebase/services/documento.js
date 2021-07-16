@@ -26,3 +26,21 @@ export async function fetchDocumentosPreenchidos() {
 
   return documentos;
 }
+
+export async function fetchDocumentosPreenchidosById(academicoId) {
+  const academico = await getUserByAuthenticationId(academicoId);
+
+  const documentosRef = await db
+    .collection(DOCUMENTOS)
+    .where("academico", "==", db.doc(`academicos/${academico.id}`))
+    .get()
+    .then(snapshot => snapshot.docs);
+
+  const documentos = [];
+
+  await documentosRef.forEach(async documentoRef => {
+    const documento = await getDocumentoPreenchidoById(documentoRef.id);
+    documentos.push({ ...documento, id: documentoRef.id });
+  });
+  return documentos;
+}

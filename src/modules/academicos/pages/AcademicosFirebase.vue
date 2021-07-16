@@ -32,28 +32,6 @@
                   </template>
                   <span>Acessar Academico</span>
                 </v-tooltip>
-
-                <v-tooltip top>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn icon>
-                      <v-icon color="warning" dark v-bind="attrs" v-on="on">
-                        mdi-pencil
-                      </v-icon>
-                    </v-btn>
-                  </template>
-                  <span>Editar Academico</span>
-                </v-tooltip>
-
-                <v-tooltip top>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn icon @click="handleDeleteAcademico(item)">
-                      <v-icon color="error" dark v-bind="attrs" v-on="on">
-                        mdi-delete
-                      </v-icon>
-                    </v-btn>
-                  </template>
-                  <span>Deletar Academico</span>
-                </v-tooltip>
               </div>
             </td>
           </tr>

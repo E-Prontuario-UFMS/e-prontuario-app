@@ -14,5 +14,4 @@ const firebaseApp = firebase.initializeApp({
 });
 
 const db = firebaseApp.firestore();
-const fieldValue = firebase.firestore.FieldValue;
-export { db, fieldValue, firebase };
+export { db, firebase };
