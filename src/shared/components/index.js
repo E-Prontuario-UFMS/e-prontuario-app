@@ -1,0 +1,10 @@
+export { default as AcademicosTable } from "./AcademicosTable.vue";
+export { default as AutoCompleteInputFirebase } from "./AutoCompleteInputFirebase.vue";
+export { default as CustomFooter } from "./CustomFooter.vue";
+export { default as EOverlay } from "./EOverlay.vue";
+export { default as ETitle } from "./ETitle.vue";
+export { default as Logo } from "./Logo.vue";
+export { default as MainBar } from "./MainBar.vue";
+export { default as SwitchTheme } from "./SwitchTheme.vue";
+export { default as StickTop } from "./StickTop.vue";
+export { default as GoogleLoginButton } from "./GoogleLoginButton.vue";

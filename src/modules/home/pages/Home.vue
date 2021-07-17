@@ -19,7 +19,7 @@
 </template>
 
 <script>
-  import { mapActions, mapState } from "vuex";
+  import { mapState } from "vuex";
   import { toastMixin } from "../../../mixins";
   export default {
     mixins: [toastMixin],
@@ -27,17 +27,22 @@
       ...mapState("login", ["user"]),
     },
     methods: {
-      ...mapActions("documento", ["ActionGetTitulosDocumento"]),
-
       checkIfEmailIsVerified() {
         this.user.emailVerified
           ? null
           : this.throwError("Email ainda não foi verificado 😞");
       },
+      checkIfHaveEmailInStore() {
+        this.user.uid ? null : this.redirectToLoginIfUserDontHaveAuthId();
+      },
+      redirectToLoginIfUserDontHaveAuthId() {
+        this.throwError("Usúario não autenticado 😞");
+        this.$router.push("/");
+      },
     },
     mounted() {
-      this.ActionGetTitulosDocumento();
       this.checkIfEmailIsVerified();
+      this.checkIfHaveEmailInStore();
     },
   };
 </script>

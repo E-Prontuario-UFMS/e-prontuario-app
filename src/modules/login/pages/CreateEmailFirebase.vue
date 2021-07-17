@@ -5,11 +5,11 @@
       <logo />
       <v-layout align-center justify-center>
         <v-flex xs12 sm8 md5>
-          <v-card class="login-title elevation-12 pa-5 flex-column" shaped>
-            <v-card-title class="pa-5 mx-auto">
-              <h2 class="pt-5">Cadastro</h2>
+          <v-card class="login-title pa-5 flex-column" rounded elevation="12">
+            <v-card-title class="mx-auto">
+              <h2 class="pt-2">Cadastro</h2>
             </v-card-title>
-            <v-card-subtitle class="pb-12">
+            <v-card-subtitle class="pb-4">
               <span> Bom, detectamos que voce é um </span>
               <span class="font-weight-bold">{{ isProfessor }}</span>
             </v-card-subtitle>
@@ -22,6 +22,9 @@
                   data-cy="email"
                   required
                   type="email"
+                  dense
+                  filled
+                  :rules="[emailRules.required, emailRules.isAValidEmail]"
                 ></v-text-field>
                 <v-text-field
                   label="Senha"
@@ -31,15 +34,25 @@
                   data-cy="password"
                   required
                   :rules="[passwordRules.required, passwordRules.min]"
-                ></v-text-field>
+                  dense
+                  filled
+                />
                 <v-text-field
                   label="Confirmação de Senha"
                   v-model="confirmationPassword"
                   outlined
                   type="password"
                   data-cy="confirmation-password"
+                  :rules="[
+                    confirmationPasswordRules.isEqual(
+                      confirmationPassword,
+                      password,
+                    ),
+                  ]"
                   required
-                ></v-text-field>
+                  dense
+                  filled
+                />
                 <v-row class="mt-5" justify="center">
                   <v-btn
                     large
@@ -62,10 +75,8 @@
 </template>
 
 <script>
-  import Logo from "@/shared/components/Logo.vue";
+  import { Logo, EOverlay, SwitchTheme } from "@/shared/components";
   import { loadingMixin, toastMixin } from "@/mixins";
-  import EOverlay from "../../../shared/components/EOverlay.vue";
-  import SwitchTheme from "../../../shared/components/SwitchTheme.vue";
   import { mapActions, mapState } from "vuex";
   import { createEmail } from "../services/firebase";
   export default {
@@ -76,12 +87,21 @@
       password: "",
       confirmationPassword: "",
       form: false,
+      emailRules: {
+        required: value => value.length > 0 || "Não pode ser vazio.",
+        isAValidEmail: value =>
+          value.match(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/) ||
+          "Email invalido",
+      },
       passwordRules: {
         required: value => !!value || "Não pode ser vazio.",
         min: v => v.length >= 8 || "Minimo de 8 Caracteres",
       },
+      confirmationPasswordRules: {
+        isEqual: (value, other) =>
+          value === other || "As senhas não são iguais.",
+      },
     }),
-    // TODO: obrigar uma senha melhor, 8 caracteres com caracteres especiais
     computed: {
       ...mapState("login", ["usuarioProvisorio"]),
       isProfessor() {

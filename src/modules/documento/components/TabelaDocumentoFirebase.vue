@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-row class="d-flex justify-center pl-6 pr-6 pt-6" fluid dense>
-      <v-col>
+      <v-col cols="auto" md="9" sm="12">
         <v-autocomplete
           dense
           :items="modelos"
@@ -13,8 +13,9 @@
           clearable
         />
       </v-col>
-      <v-col cols="3">
+      <v-col cols="auto" md="3" sm="12" v-if="false">
         <v-select
+          clearable
           outlined
           dense
           label="Filtros"

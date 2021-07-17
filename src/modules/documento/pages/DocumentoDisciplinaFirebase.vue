@@ -3,7 +3,7 @@
     <e-title title="Documentos" route="/home"></e-title>
 
     <v-card class="my-5 mx-auto">
-      <v-tabs v-model="tab">
+      <v-tabs v-model="tab" center-active show-arrows>
         <v-tab
           v-for="currentTab in tabs"
           :key="currentTab.name"

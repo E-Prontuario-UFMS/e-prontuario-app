@@ -1,7 +1,7 @@
 <template>
   <div v-if="!isLogin">
     <v-app-bar app clipped-right flat height="72" color="primary" dark>
-      <v-btn icon @click="toggleDrawer" app>
+      <v-btn icon @click="toggleDrawer" v-if="smallScreenAndDown" app>
         <v-icon>
           mdi-menu
         </v-icon>
@@ -14,9 +14,10 @@
 
     <v-navigation-drawer
       app
-      width="300"
+      width="250"
       :value="drawerState"
       @input="ActionToggleDrawer"
+      :permanent="mediumScreenAndUp"
     >
       <v-card height="128" width="100%">
         <v-avatar size="48">
@@ -77,8 +78,11 @@
   import SwitchTheme from "./SwitchTheme.vue";
   import { mapActions, mapGetters, mapState } from "vuex";
   import AutoCompleteInputFirebase from "./AutoCompleteInputFirebase.vue";
+  import { ROUTES } from "@/constants";
+  import { mediaQueryMixin } from "@/mixins";
 
   export default {
+    mixins: [mediaQueryMixin],
     components: {
       SwitchTheme,
       AutoCompleteInputFirebase,
@@ -108,15 +112,6 @@
         this.isLogin = this.$router.currentRoute.fullPath === "/";
       },
       routing(value) {
-        const ROUTES = {
-          HOME: "/home",
-          DOCUMENTOS: "/home/documento",
-          PACIENTES: "/home/pacientes",
-          DISCIPLINAS: "/home/disciplinas",
-          CONFIGURACOES: "/configuracoes",
-          SUGESTOES: "/home/feedback",
-        };
-
         this.$router.replace(ROUTES[value]);
       },
     },

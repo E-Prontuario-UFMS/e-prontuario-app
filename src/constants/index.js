@@ -31,3 +31,13 @@ export const PACIENTES = "pacientes";
 export const ACADEMICOS = "academicos";
 export const MATRICULA = "matricula";
 export const FEEDBACK = "feedback";
+export const USUARIOS = "usuarios";
+
+export const ROUTES = {
+  HOME: "/home",
+  DOCUMENTOS: "/home/documento",
+  PACIENTES: "/home/pacientes",
+  DISCIPLINAS: "/home/disciplinas",
+  CONFIGURACOES: "/configuracoes",
+  SUGESTOES: "/home/feedback",
+};

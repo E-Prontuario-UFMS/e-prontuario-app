@@ -24,4 +24,9 @@ export default [
     name: "AlocarAlunoDisciplinaId",
     component: () => import("./pages/AlocarAlunoDisciplinaId.vue"),
   },
+  {
+    path: "/configuracoes/permissoes",
+    name: "Permissoes",
+    component: () => import("./pages/Permissoes.vue"),
+  },
 ];

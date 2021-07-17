@@ -10,14 +10,12 @@ export async function getAcademicoById(id) {
     .then(snapshot => snapshot.data());
 }
 
-export async function getUserByAuthenticationId(id) {
+export async function getUserByAuthenticationId(authId) {
   return await db
     .collection(ACADEMICOS)
-    .where("id", "==", id)
+    .where("authId", "==", authId)
     .get()
-    .then(snapshot => {
-      return snapshot.docs[0].data();
-    });
+    .then(snapshot => snapshot.docs[0].data());
 }
 
 export async function getAllDisciplinasByAcademicoId(id) {

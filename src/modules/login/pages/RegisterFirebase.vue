@@ -1,14 +1,13 @@
 <template>
   <v-main>
     <v-container>
-      <switch-theme></switch-theme>
-      <e-title style="margin-left: 0px" route="/" title=""></e-title>
+      <stick-top route="/" />
       <logo />
       <v-layout align-center justify-center>
         <v-flex xs12 sm8 md5>
-          <v-card class="login-title elevation-12 pa-5 flex-column" shaped>
+          <v-card class="pa-2" elevation="12">
             <v-card-title class="pa-5 mx-auto">
-              <h1 class="pt-5">Cadastro</h1>
+              <h1>Cadastro</h1>
             </v-card-title>
             <v-card-subtitle class="pb-12">
               <span>
@@ -22,7 +21,7 @@
                   label="Passaporte"
                   v-model="passaporte"
                   data-cy="passaporte"
-                ></v-text-field>
+                />
                 <v-text-field
                   label="Senha"
                   v-model="senha"
@@ -32,7 +31,7 @@
                   outlined
                   :rules="[passwordRules.required, passwordRules.min]"
                   data-cy="senha"
-                ></v-text-field>
+                />
                 <v-row class="mt-5" justify="center">
                   <v-btn
                     large
@@ -50,23 +49,21 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <e-overlay :loading="loading"></e-overlay>
+    <e-overlay :loading="loading" />
   </v-main>
 </template>
 
 <script>
-  import Logo from "@/shared/components/Logo.vue";
   import { doSiscadLogin } from "../../../utils/siscad";
   import { loadingMixin } from "@/mixins";
 
-  import EOverlay from "../../../shared/components/EOverlay.vue";
-  import SwitchTheme from "../../../shared/components/SwitchTheme.vue";
-  import ETitle from "../../../shared/components/ETitle.vue";
   import { mapActions } from "vuex";
   import { toastMixin } from "../../../mixins";
   import { verifyIfExistsSamePassportInData } from "../services/firebase";
+
+  import { StickTop, EOverlay, Logo } from "@/shared/components";
   export default {
-    components: { EOverlay, SwitchTheme, Logo, ETitle },
+    components: { EOverlay, Logo, StickTop },
     mixins: [loadingMixin, toastMixin],
     data: () => ({
       passaporte: "",
@@ -96,7 +93,7 @@
           this.$router.push("/create-email");
         } else {
           this.throwError(
-            "Esse passaporte já está em uso, você esqueceu a senha ? ",
+            "Esse passaporte já está em uso, você esqueceu a senha ? 😞",
           );
         }
       },
@@ -106,5 +103,3 @@
     },
   };
 </script>
-
-<style></style>

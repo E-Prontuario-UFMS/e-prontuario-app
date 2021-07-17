@@ -47,11 +47,13 @@ function createAluno({ email, password, usuarioProvisorio }) {
           .then(() => {
             db.collection(ACADEMICOS).add({
               email,
-              id: credentials.user.uid,
+              authId: credentials.user.uid,
               passaporte: usuarioProvisorio.usuario.passaporte,
               cpf: usuarioProvisorio.usuario.cpf,
               nome: usuarioProvisorio.usuario.nome,
               rga: usuarioProvisorio.usuario.rga,
+              isProfessor: false,
+              isAdmin: false,
             });
             sendVerificationEmail(email);
           })

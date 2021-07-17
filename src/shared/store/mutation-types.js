@@ -1,1 +1,3 @@
 export const TOGGLE_DRAWER = "SHARED/TOGGLE_DRAWER";
+
+export const TOGGLE_THEME = "SHARED/TOGGLE_THEME";

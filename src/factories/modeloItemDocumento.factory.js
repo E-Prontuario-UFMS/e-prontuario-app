@@ -1,7 +1,6 @@
 import { ATIVO, NOVO } from "../constants";
 
 export function modeloItemDocumentoFactory(modelo) {
-  console.log(modelo);
   return {
     id: null,
     idItemPai: null,

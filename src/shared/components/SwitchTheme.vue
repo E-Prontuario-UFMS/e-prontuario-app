@@ -5,18 +5,20 @@
 </template>
 
 <script>
+  import { mapActions, mapState } from "vuex";
   export default {
-    data: () => ({
-      isDark: false,
-    }),
+    computed: {
+      ...mapState("shared", ["isDark"]),
+    },
     methods: {
+      ...mapActions("shared", ["ActionToggleTheme"]),
       changeTheme() {
-        this.$vuetify.theme.dark = !this.isDark;
-        this.isDark = !this.isDark;
+        this.ActionToggleTheme(!this.isDark);
+        this.$vuetify.theme.dark = this.isDark;
       },
     },
     mounted() {
-      this.isDark = this.$vuetify.theme.dark;
+      this.$vuetify.theme.dark = this.isDark;
     },
   };
 </script>

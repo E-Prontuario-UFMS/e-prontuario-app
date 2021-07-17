@@ -11,7 +11,7 @@
             class="col-sm-12 col-md-8 pa-3"
             v-model="form.nome"
             :rules="nameRules"
-          ></v-text-field>
+          />
           <v-text-field
             label="Siap"
             outlined
@@ -19,8 +19,9 @@
             :rules="siapRules"
             v-model="form.siap"
             class="col-sm-12 col-md-4 pa-3"
-          ></v-text-field
-        ></v-row>
+          />
+          >
+        </v-row>
         <v-row justify="end" class="pa-3">
           <v-btn color="error" outlined @click="goBack()">Voltar</v-btn>
           <v-btn

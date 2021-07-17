@@ -12,10 +12,8 @@
 
   export default {
     components: { CustomFooter },
-    mounted() {
+    created() {
       document.title = "E-Prontuario";
     },
   };
 </script>
-
-<style lang="scss"></style>
