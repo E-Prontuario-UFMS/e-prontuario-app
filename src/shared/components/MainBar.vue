@@ -14,12 +14,12 @@
 
     <v-navigation-drawer
       app
-      width="250"
+      width="290"
       :value="drawerState"
       @input="ActionToggleDrawer"
       :permanent="mediumScreenAndUp"
     >
-      <v-card height="128" width="100%">
+      <v-card width="100%">
         <v-avatar size="48">
           <img
             v-if="user.photoUrl"
@@ -28,7 +28,7 @@
           />
           <v-icon v-else>mdi-account-circle</v-icon>
         </v-avatar>
-        <v-card-title>{{ user && user.displayName }} </v-card-title>
+        <v-card-title>{{ user && user.displayName }}</v-card-title>
         <v-card-subtitle>{{ user && user.email }}</v-card-subtitle>
       </v-card>
 

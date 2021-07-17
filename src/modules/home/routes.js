@@ -10,7 +10,6 @@ import { routes as feedback } from "../feedback";
 export default [
   {
     path: "/home",
-    name: "Inicial",
     component: () => import("./pages/Inicial"),
     children: [
       ...documento,

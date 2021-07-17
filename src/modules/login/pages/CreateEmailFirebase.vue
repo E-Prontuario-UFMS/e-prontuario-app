@@ -130,6 +130,7 @@
       },
     },
     mounted() {
+      this.email = this.usuarioProvisorio.usuario.emailAlternativo;
       if (!this.usuarioProvisorio.token) {
         this.$router.replace("/");
       }

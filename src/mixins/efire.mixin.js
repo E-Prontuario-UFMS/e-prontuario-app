@@ -1,11 +1,11 @@
 import {
-  ACADEMICOS,
   DISCIPLINAS,
   DOCUMENTOS,
   MATRICULA,
   MODELOS,
   PACIENTES,
   PROFESSORES,
+  USUARIOS,
 } from "../constants";
 import { db } from "../firebase";
 export default {
@@ -24,7 +24,7 @@ export default {
     modelos: db.collection(MODELOS),
     pacientes: db.collection(PACIENTES),
     disciplinas: db.collection(DISCIPLINAS),
-    academicos: db.collection(ACADEMICOS),
+    academicos: db.collection(USUARIOS),
     matriculas: db.collection(MATRICULA),
   },
 };

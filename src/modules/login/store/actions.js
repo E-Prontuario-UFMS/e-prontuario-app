@@ -2,7 +2,7 @@ import * as types from "./mutation-types";
 import { doSiscadLogin } from "../../../utils/siscad";
 
 import { db } from "../../../firebase";
-import { ACADEMICOS } from "../../../constants";
+import { USUARIOS } from "../../../constants";
 
 export const ActionSetGlobalUser = async ({ commit }, payload) => {
   const { token, usuario } = await doSiscadLogin({
@@ -22,7 +22,7 @@ export const ActionDeleteGlobalUser = ({ commit }) => {
 
 export async function saveAcademicoOnFirebase(token, usuario) {
   await db
-    .collection(ACADEMICOS)
+    .collection(USUARIOS)
     .doc(usuario.rga)
     .set(
       {

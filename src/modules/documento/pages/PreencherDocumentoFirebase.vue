@@ -51,7 +51,7 @@
     buildBooleanSchema,
     buildNumberSchema,
   } from "../firebase/buildSchema";
-  import { ACADEMICOS, PACIENTES } from "../../../constants";
+  import { USUARIOS, PACIENTES } from "../../../constants";
   export default {
     components: { ETitle, VJsf },
     mixins: [routerMixin, efireMixin],
@@ -100,7 +100,7 @@
           documento: this.documento,
           paciente: db.doc(`${PACIENTES}/${this.paciente.id}`),
           createdAt: new Date(),
-          academico: db.doc(`${ACADEMICOS}/${this.user.uid}`),
+          academico: db.doc(`${USUARIOS}/${this.user.uid}`),
         });
         this.$router.replace("/home/documento");
       },

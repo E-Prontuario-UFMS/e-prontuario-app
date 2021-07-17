@@ -1,10 +1,10 @@
-import { ACADEMICOS, DISCIPLINAS } from "../../constants";
+import { DISCIPLINAS, USUARIOS } from "../../constants";
 import { db } from "../../firebase";
 import { fetchDisciplinaById } from "./disciplina";
 
 export async function getAcademicoById(id) {
   return await db
-    .collection(ACADEMICOS)
+    .collection(USUARIOS)
     .doc(id)
     .get()
     .then(snapshot => snapshot.data());
@@ -12,17 +12,17 @@ export async function getAcademicoById(id) {
 
 export async function getUserByAuthenticationId(authId) {
   return await db
-    .collection(ACADEMICOS)
+    .collection(USUARIOS)
     .where("authId", "==", authId)
     .get()
     .then(snapshot => snapshot.docs[0].data());
 }
 
 export async function getAllDisciplinasByAcademicoId(id) {
-  const academicoRef = await db.collection(ACADEMICOS).doc(id);
+  const academicoRef = await db.collection(USUARIOS).doc(id);
   const disciplinasRefs = await db
     .collection(DISCIPLINAS)
-    .where("academicos", "array-contains", academicoRef)
+    .where(USUARIOS, "array-contains", academicoRef)
     .get()
     .then(data => data.docs);
 
@@ -38,7 +38,7 @@ export async function getAllDisciplinasByAcademicoId(id) {
 
 export async function fetchAcademicoByRga(rga) {
   return await db
-    .collection(ACADEMICOS)
+    .collection(USUARIOS)
     .where("rga", "==", rga)
     .get()
     .then(snapshot =>

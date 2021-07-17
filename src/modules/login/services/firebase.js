@@ -1,4 +1,4 @@
-import { ACADEMICOS } from "../../../constants";
+import { USUARIOS } from "../../../constants";
 import { db, firebase } from "../../../firebase";
 
 export function createEmail({ email, password, usuarioProvisorio }) {
@@ -45,7 +45,7 @@ function createAluno({ email, password, usuarioProvisorio }) {
             displayName: usuarioProvisorio.usuario.nome,
           })
           .then(() => {
-            db.collection(ACADEMICOS).add({
+            db.collection(USUARIOS).add({
               email,
               authId: credentials.user.uid,
               passaporte: usuarioProvisorio.usuario.passaporte,
@@ -84,7 +84,7 @@ function sendVerificationEmail(email) {
 export async function verifyIfExistsSamePassportInData(passport) {
   return await firebase
     .firestore()
-    .collection(ACADEMICOS)
+    .collection(USUARIOS)
     .where("passaporte", "==", passport)
     .get()
     .then(data => data.docs)
