@@ -1,5 +1,5 @@
 <template>
-  <disciplinas></disciplinas>
+  <disciplinas />
 </template>
 
 <script>
@@ -7,9 +7,6 @@
   export default {
     components: { Disciplinas },
     name: "DisciplinaPage",
-    data: () => ({
-      disciplinas: [],
-    }),
   };
 </script>
 

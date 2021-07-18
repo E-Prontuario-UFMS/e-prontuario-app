@@ -9,9 +9,9 @@
             Selecione o Professor
           </v-col>
           <v-col sm="12" md="2">
-            <v-btn :disabled="!professor" color="success" @click="design"
-              >Designar</v-btn
-            >
+            <v-btn :disabled="!professor" color="success" @click="design">
+              Designar
+            </v-btn>
           </v-col>
         </v-row>
       </v-card-title>
@@ -41,27 +41,29 @@
 </template>
 
 <script>
-  import { designarProfessorDisciplina } from "../../../firebase/services/professor";
-  import { efireMixin, toastMixin } from "../../../mixins";
+  import {
+    designarProfessorDisciplina,
+    fetchAllUsersWithIsProfessorFlag,
+  } from "../../../firebase/services/professor";
+  import { toastMixin, routerMixin } from "../../../mixins";
   import ETitle from "../../../shared/components/ETitle.vue";
   export default {
     components: { ETitle },
-    mixins: [efireMixin, toastMixin],
+    mixins: [toastMixin, routerMixin],
     data: () => ({
       professores: [],
       professor: null,
     }),
-    computed: {
-      routeId() {
-        return this.$route.params.id;
-      },
-    },
 
     methods: {
+      async loadProfessores() {
+        this.professores = await fetchAllUsersWithIsProfessorFlag();
+      },
+
       async design() {
         const data = await designarProfessorDisciplina(
           this.professor,
-          this.routeId,
+          this.getRouteId,
         );
         data instanceof Error
           ? this.throwError(data.err)

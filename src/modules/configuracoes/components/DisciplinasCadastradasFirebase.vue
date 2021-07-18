@@ -3,9 +3,8 @@
     <v-data-table
       :headers="headers"
       :items="disciplinas"
-      :options.sync="options"
+      :options="options"
       :loading="loading"
-      :page.sync="page"
       class="elevation-1"
     >
       <template v-slot:item.acoes="{ item }">
@@ -73,9 +72,10 @@
 
 <script>
   import EOverlay from "../../../shared/components/EOverlay.vue";
-  import { routerMixin, efireMixin } from "@/mixins";
+  import { routerMixin } from "@/mixins";
+  import { fetchAllDisciplinas } from "../../../firebase/services/disciplina";
   export default {
-    mixins: [routerMixin, efireMixin],
+    mixins: [routerMixin],
     components: { EOverlay },
     data: () => ({
       headers: [
@@ -83,16 +83,19 @@
         { text: "Ações", value: "acoes" },
       ],
       loading: false,
-      page: 1,
       options: {},
+      disciplinas: [],
     }),
     methods: {
       async handleDeleteDisciplina(item) {
         console.log(item);
       },
+      async loadDisciplinas() {
+        this.disciplinas = await fetchAllDisciplinas();
+      },
     },
     mounted() {
-      console.log(this.disciplinas);
+      this.loadDisciplinas();
     },
   };
 </script>

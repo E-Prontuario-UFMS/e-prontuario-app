@@ -1,7 +1,6 @@
 import { USUARIOS } from "../../constants";
 import { db } from "../../firebase";
 
-// fetch usuario by id
 export async function fetchUserById(id) {
   const usuario = await db
     .collection(USUARIOS)
@@ -16,5 +15,18 @@ export async function fetchAllUsers() {
     .get()
     .then(snaps => snaps.docs);
 
-  return usuariosRef.map(usuario => usuario.data());
+  return usuariosRef.map(usuario => {
+    return { ...usuario.data(), id: usuario.id };
+  });
+}
+
+export async function updateUser(usuario) {
+  const usuarioRef = await db
+    .collection(USUARIOS)
+    .doc(usuario.id)
+    .update({
+      isAdmin: usuario.isAdmin,
+      isProfessor: usuario.isProfessor,
+    });
+  return usuarioRef.data();
 }

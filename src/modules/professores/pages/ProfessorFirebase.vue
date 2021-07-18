@@ -2,8 +2,7 @@
   <v-container>
     <e-title title="Professor" route="/professores"></e-title>
     <v-card class="my-6 pa-2">
-      <v-card-title> Nome: {{ professor.nome }} </v-card-title>
-      <v-card-subtitle> Siap: {{ professor.siap }} </v-card-subtitle>
+      <v-card-title> {{ professor.nome }} </v-card-title>
 
       <div v-if="hasDisciplinas">
         <v-card-text>Disciplinas Alocadas: </v-card-text>
@@ -31,7 +30,8 @@
   import routerMixin from "@/mixins/router.mixin";
   import ETitle from "../../../shared/components/ETitle.vue";
   import { db } from "../../../firebase";
-  import { DISCIPLINAS, PROFESSORES } from "../../../constants";
+  import { DISCIPLINAS } from "../../../constants";
+  import { getProfessorById } from "../../../firebase/services/professor";
   export default {
     mixins: [routerMixin],
     components: { EOverlay, ETitle },
@@ -47,12 +47,7 @@
     },
     methods: {
       async loadData() {
-        const { id } = this.$route.params;
-        this.professor = await db
-          .collection(PROFESSORES)
-          .doc(id)
-          .get()
-          .then(data => data.data());
+        this.professor = await getProfessorById(this.getRouteId);
         this.professor.disciplinas.map(async d => {
           await db
             .collection(DISCIPLINAS)

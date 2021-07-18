@@ -1,4 +1,4 @@
-import { DISCIPLINAS, PROFESSORES } from "../../constants";
+import { DISCIPLINAS, PROFESSORES, USUARIOS } from "../../constants";
 import { db, firebase } from "../../firebase";
 
 export async function addNewProfessor({ siap, nome }) {
@@ -11,7 +11,7 @@ export async function addNewProfessor({ siap, nome }) {
 
 export async function getProfessorById(id) {
   return await db
-    .collection(PROFESSORES)
+    .collection(USUARIOS)
     .doc(id)
     .get()
     .then(data => data.data());
@@ -54,4 +54,27 @@ export async function designarProfessorDisciplina(idProfessor, idDisciplina) {
     })
     .then(data => data)
     .catch(err => Error(err));
+}
+
+export async function fetchAllUsersWithIsProfessorFlag() {
+  return await db
+    .collection(USUARIOS)
+    .where("isProfessor", "==", true)
+    .get()
+    .then(data =>
+      data.docs.map(doc => {
+        return { ...doc.data(), id: doc.id };
+      }),
+    );
+}
+
+export async function insertDisciplinaIntoProfessor(idProfessor, disciplina) {
+  return await db
+    .collection(USUARIOS)
+    .doc(idProfessor)
+    .update({
+      disciplinas: firebase.firestore.FieldValue.arrayUnion(
+        db.doc(`disciplinas/${disciplina}`),
+      ),
+    });
 }

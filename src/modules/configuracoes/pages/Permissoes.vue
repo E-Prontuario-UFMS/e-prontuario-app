@@ -3,25 +3,39 @@
     <e-title title="Permissões" route="/configuracoes" />
 
     <v-card class="my-5 pa-5">
-      <v-data-table :items="users" :headers="headers">
+      <v-autocomplete
+        :items="users"
+        item-text="nome"
+        dense
+        clearable
+        v-model="search"
+        outlined
+      />
+      <v-data-table :items="users" :headers="headers" :search="search">
         <template v-slot:item.isAdmin="{ item }">
-          <v-switch :value="item.isAdmin" />
+          <v-switch v-model="item.isAdmin" />
         </template>
         <template v-slot:item.isProfessor="{ item }">
-          <v-switch :value="item.isAdmin" />
+          <v-switch
+            v-model="item.isProfessor"
+            @click.prevent="handleChangePermission(item)"
+          />
         </template>
       </v-data-table>
     </v-card>
-    <e-overlay :loading="loading"></e-overlay>
+    <e-overlay :loading="loading" />
   </v-container>
 </template>
 
 <script>
   import { ETitle, EOverlay } from "@/shared/components";
-  import { fetchAllUsers } from "../../../firebase/services/usuarios";
-  import { loadingMixin } from "../../../mixins";
+  import {
+    fetchAllUsers,
+    updateUser,
+  } from "../../../firebase/services/usuarios";
+  import { loadingMixin, permissionsMixin } from "@/mixins";
   export default {
-    mixins: [loadingMixin],
+    mixins: [loadingMixin, permissionsMixin],
     components: {
       ETitle,
       EOverlay,
@@ -51,20 +65,22 @@
     data: () => ({
       users: [],
       loading: false,
+      search: "",
     }),
     methods: {
       async loadAllUsers() {
         this.startLoading();
         const users = await fetchAllUsers();
-        console.log(users);
         this.users = users;
         this.stopLoading();
       },
+      async handleChangePermission(item) {
+        await updateUser(item);
+      },
     },
     async mounted() {
+      this.redirectIfHasNoPermission();
       this.loadAllUsers();
     },
   };
 </script>
-
-<style></style>

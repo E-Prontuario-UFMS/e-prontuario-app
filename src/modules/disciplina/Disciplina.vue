@@ -4,11 +4,10 @@
     </e-title>
     <v-card class="my-5" v-if="this.hasProfessorDesignado">
       <v-card-title v-if="this.hasProfessorDesignado">
-        Professor Responsavel: {{ professor.nome }}
+        Professores Responsaveis
       </v-card-title>
-
-      <v-card-subtitle v-if="this.hasProfessorDesignado">
-        Siap: {{ professor.siap }}
+      <v-card-subtitle v-for="professor in professores" :key="professor.authId">
+        {{ professor.nome }}
       </v-card-subtitle>
     </v-card>
     <v-card class="my-5" v-if="!this.hasProfessorDesignado">
@@ -16,7 +15,9 @@
         Não existe professor designado ainda
       </v-card-title>
       <v-card-actions>
-        <v-btn @click="goTo(`/configuracoes/disciplinas/designar/${routeId}`)">
+        <v-btn
+          @click="goTo(`/configuracoes/disciplinas/designar/${getRouteId}`)"
+        >
           Designar Professor
         </v-btn>
       </v-card-actions>
@@ -48,7 +49,7 @@
 
 <script>
   import { routerMixin } from "@/mixins";
-  import ETitle from "../../shared/components/ETitle.vue";
+  import { ETitle } from "@/shared/components";
   import {
     fetchDisciplinaById,
     fetchProfessorByDisciplinaId,
@@ -59,12 +60,11 @@
   export default {
     components: { ETitle, AlunosMatriculados },
     mixins: [routerMixin],
-
     data: () => ({
       disciplina: {
         nome: "",
       },
-      professor: {},
+      professores: [],
       loading: true,
       modelos: [],
       alunos: [],
@@ -72,7 +72,7 @@
 
     computed: {
       hasProfessorDesignado() {
-        return !!this.professor.nome && !!this.professor.siap;
+        return this.professores.length > 0;
       },
       hasMoreThanOneModels() {
         return this.modelos.length > 0;
@@ -81,17 +81,18 @@
 
     methods: {
       async loadDisciplina() {
-        const disciplina = await fetchDisciplinaById(this.getRouteId);
-        this.disciplina = disciplina;
+        this.disciplina = await fetchDisciplinaById(this.getRouteId);
+
         this.loadProfessorResponsavel();
         this.modelos = await getModeloDocumentoByDisciplina(this.getRouteId);
 
         this.loadAlunosByDisciplina();
       },
+
       async loadProfessorResponsavel() {
-        const response = await fetchProfessorByDisciplinaId(this.getRouteId);
-        this.professor = response;
+        this.professores = await fetchProfessorByDisciplinaId(this.getRouteId);
       },
+
       async loadAlunosByDisciplina() {
         const response = await fetchAlunosByDisciplina(this.getRouteId);
         this.alunos = response;

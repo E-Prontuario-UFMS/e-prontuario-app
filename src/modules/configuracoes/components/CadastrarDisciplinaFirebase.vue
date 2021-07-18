@@ -9,7 +9,7 @@
           required
           :rules="nameRules"
           v-model="nome"
-        ></v-text-field>
+        />
         <v-autocomplete
           class="col-md-6 pa-2"
           required
@@ -20,7 +20,7 @@
           v-model="professorAutoComplete"
           label="Professor Responsavel"
           return-object
-        ></v-autocomplete>
+        />
         <v-textarea
           class="pa-2"
           label="Descrição"
@@ -28,7 +28,7 @@
           required
           v-model="descricao"
           :rules="descricaoRules"
-        ></v-textarea>
+        />
       </v-row>
       <v-row class="pa-5" justify="end">
         <v-btn
@@ -47,8 +47,12 @@
 
 <script>
   import EOverlay from "../../../shared/components/EOverlay.vue";
-  import { db } from "../../../firebase";
-  import { DISCIPLINAS, PROFESSORES } from "../../../constants";
+  import { fetchAllUsersWithIsProfessorFlag } from "../../../firebase/services/professor";
+  import {
+    addDisciplina,
+    addDisciplinaInProfessor,
+    addProfessorInDisciplina,
+  } from "../../../firebase/services/disciplina";
   export default {
     components: { EOverlay },
     data: () => ({
@@ -67,31 +71,22 @@
     }),
     methods: {
       async handleAddNewDisciplina() {
-        const { id } = await db.collection(DISCIPLINAS).add({
-          descricao: this.descricao,
+        const { id } = await addDisciplina({
           nome: this.nome,
-          modelos: [],
+          descricao: this.descricao,
         });
-        const professorId = this.professorAutoComplete.id;
-        this.addDisciplinaOnProfessor(id, professorId);
+        await addProfessorInDisciplina(id, this.professorAutoComplete.id);
+        await addDisciplinaInProfessor(this.professorAutoComplete.id, id);
         this.$refs.form.reset();
       },
-      async addDisciplinaOnProfessor(disciplinaId, professorId) {
-        const professor = await db
-          .collection(PROFESSORES)
-          .doc(professorId)
-          .get()
-          .then(data => data.data());
-        professor.disciplinas.push(db.doc(`/${DISCIPLINAS}/${disciplinaId}`));
-        db.collection(PROFESSORES)
-          .doc(professorId)
-          .update({
-            ...professor,
-          });
+
+      async loadProfessores() {
+        const response = await fetchAllUsersWithIsProfessorFlag();
+        this.professores = response;
       },
     },
-    firestore: {
-      professores: db.collection("professores"),
+    mounted() {
+      this.loadProfessores();
     },
   };
 </script>

@@ -7,8 +7,7 @@
 </template>
 
 <script>
-  import EOverlay from "../../../shared/components/EOverlay.vue";
-  import ETitle from "../../../shared/components/ETitle.vue";
+  import { EOverlay, ETitle } from "@/shared/components";
   import { fetchAcademicoById } from "../services";
   export default {
     components: { ETitle, EOverlay },

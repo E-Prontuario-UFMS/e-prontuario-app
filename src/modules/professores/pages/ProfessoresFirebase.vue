@@ -3,7 +3,7 @@
     <e-title title="Professores" route="/configuracoes"> </e-title>
 
     <v-row justify="end" class="mr-5 mb-5">
-      <v-btn color="success" @click="goTo('/novo-professor')">
+      <v-btn color="success" @click="goTo('/novo-professor')" v-if="false">
         Adicionar Professor
       </v-btn>
     </v-row>
@@ -11,10 +11,8 @@
       <v-data-table
         :headers="headers"
         :items="professores"
-        :options.sync="options"
+        :options="options"
         :loading="loading"
-        :page.sync="page"
-        class="elevation-1"
       >
         <template v-slot:item.acoes="{ item }">
           <tr>
@@ -63,35 +61,32 @@
 
 <script>
   import { routerMixin } from "@/mixins";
-  import { db } from "../../../firebase";
   import ETitle from "@/shared/components/ETitle.vue";
-  import { PROFESSORES } from "../../../constants";
+  import { fetchAllUsersWithIsProfessorFlag } from "../../../firebase/services/professor";
   export default {
     components: { ETitle },
     mixins: [routerMixin],
     data: () => ({
       headers: [
         { text: "Nome", value: "nome" },
-        { text: "SIAP", value: "siap" },
         { text: "Ações", value: "acoes" },
       ],
-      page: 0,
       options: {},
       loading: false,
-      professoresPagination: {},
-      pagination: {},
       professores: [],
     }),
     methods: {
-      async handleDeleteProfessor(item) {
-        console.log(item);
+      async loadProfessores() {
+        this.loading = true;
+
+        const response = await fetchAllUsersWithIsProfessorFlag();
+
+        this.professores = response;
+        this.loading = false;
       },
     },
     mounted() {
-      console.log(this.professores);
-    },
-    firestore: {
-      professores: db.collection(PROFESSORES),
+      this.loadProfessores();
     },
   };
 </script>
