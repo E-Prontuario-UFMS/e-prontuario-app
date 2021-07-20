@@ -1,0 +1,12 @@
+{
+  "titulo": "",
+  "descricao": "",
+  "itensDocumento": [
+    {
+      "descricao": "",
+      "isObrigatorio": false,
+      "tipo": "STRING",
+      "tituloItemDocumento": ""
+    }
+  ]
+}

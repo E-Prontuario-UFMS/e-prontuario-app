@@ -1,0 +1,13 @@
+[
+  {
+    "academico": {
+      "id": 1,
+      "nome": "Nome"
+    },
+    "modeloDocumento": {
+      "id": 1,
+      "titulo": "Admissão"
+    },
+    "obs": "Resposta padrão de paginação"
+  }
+]
