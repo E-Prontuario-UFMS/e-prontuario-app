@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <h4 class="my-2">Disciplinas</h4>
     <v-card
       v-for="disciplina in disciplinas"
       :key="disciplina.id"
