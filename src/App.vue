@@ -17,3 +17,10 @@
     },
   };
 </script>
+
+<style lang="scss">
+  .table-border {
+    border-bottom: 2px solid #1e4ffa;
+    border-top: 2px solid #1e4ffa;
+  }
+</style>
