@@ -3,7 +3,7 @@
     <e-title route="/configuracoes" title="Disciplinas"></e-title>
     <v-tabs v-model="tab" class="mt-5">
       <v-tab>{{ this.tabTitle[0] }}</v-tab>
-      <v-tab :disabled="!isProfessor">{{ this.tabTitle[1] }}</v-tab>
+      <v-tab :hidden="!isProfessor">{{ this.tabTitle[1] }}</v-tab>
     </v-tabs>
 
     <v-tabs-items v-model="tab">

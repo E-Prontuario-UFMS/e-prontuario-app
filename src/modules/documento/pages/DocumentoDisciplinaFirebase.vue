@@ -107,7 +107,6 @@
     }),
     computed: {
       ...mapGetters("login", ["isProfessor"]),
-
       headers() {
         return [
           {
@@ -135,10 +134,12 @@
           {
             name: "Todos Modelos",
             available: this.isProfessor,
+            hidden: !this.isProfessor,
           },
           {
             name: "Designar Documentos",
             available: this.isProfessor,
+            hidden: !this.isProfessor,
           },
         ];
       },

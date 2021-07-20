@@ -22,7 +22,7 @@
                 <span>Acessar Disciplina</span>
               </v-tooltip>
 
-              <v-tooltip top>
+              <v-tooltip top v-if="isProfessor">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
                     icon
@@ -36,7 +36,7 @@
                 <span>Editar Disciplina</span>
               </v-tooltip>
 
-              <v-tooltip top>
+              <v-tooltip top v-if="isProfessor">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn icon @click="handleDeleteDisciplina(item)">
                     <v-icon color="error" dark v-bind="attrs" v-on="on">
@@ -46,7 +46,7 @@
                 </template>
                 <span>Deletar Disciplina</span>
               </v-tooltip>
-              <v-tooltip top>
+              <v-tooltip top v-if="isProfessor">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
                     icon
@@ -74,6 +74,7 @@
   import EOverlay from "../../../shared/components/EOverlay.vue";
   import { routerMixin } from "@/mixins";
   import { fetchAllDisciplinas } from "../../../firebase/services/disciplina";
+  import { mapGetters } from "vuex";
   export default {
     mixins: [routerMixin],
     components: { EOverlay },
@@ -86,6 +87,9 @@
       options: {},
       disciplinas: [],
     }),
+    computed: {
+      ...mapGetters("login", ["isProfessor"]),
+    },
     methods: {
       async handleDeleteDisciplina(item) {
         console.log(item);

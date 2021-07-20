@@ -42,17 +42,16 @@
 </template>
 
 <script>
-  import { getAcademicos } from "../services";
   import routerMixin from "@/mixins/router.mixin";
   import ETitle from "../../../shared/components/ETitle.vue";
-  import { efireMixin } from "../../../mixins";
+  import { fetchAllAcademicos } from "../../../firebase/services/academico";
   export default {
     components: { ETitle },
-    mixins: [routerMixin, efireMixin],
+    mixins: [routerMixin],
     data: () => ({
       page: 1,
-      academicosPagination: {},
       options: {},
+      academicos: [],
       headers: [
         { text: "Nome", value: "nome" },
         {
@@ -68,11 +67,9 @@
     }),
     methods: {
       async loadAcademicos() {
-        const { data } = await getAcademicos({ page: this.page - 1 });
-        this.academicosPagination = data;
-      },
-      async handleDeleteAcademico(academico) {
-        console.log(academico);
+        this.loading = true;
+        this.academicos = await fetchAllAcademicos();
+        this.loading = false;
       },
     },
     mounted() {
@@ -80,5 +77,3 @@
     },
   };
 </script>
-
-<style></style>

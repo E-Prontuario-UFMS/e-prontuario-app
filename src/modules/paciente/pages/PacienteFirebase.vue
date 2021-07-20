@@ -2,13 +2,33 @@
   <v-container>
     <e-title route="/home/pacientes" title="Detalhes do Paciente"></e-title>
 
-    <v-card elevation="5" class="mt-5">
+    <v-card elevation="5" class="my-5">
       <v-card-title> Nome: {{ paciente.nome }} </v-card-title>
       <v-card-subtitle>
         Cpf: {{ paciente.cpf }}
         <hr />
         Genero: {{ paciente.genero }}
       </v-card-subtitle>
+    </v-card>
+
+    <v-card v-if="hasMoreThanOneDocumento">
+      <v-card-title>
+        Documentos Cadastrados com esse paciente
+      </v-card-title>
+
+      <v-list>
+        <v-list-item
+          ripple
+          v-for="documentoPreenchido in documentos"
+          :key="documentoPreenchido.id"
+        >
+          <v-list-item-content>
+            <v-list-item-title>{{
+              documentoPreenchido.documento.titulo
+            }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
     </v-card>
 
     <e-overlay :loading="loading"></e-overlay>
@@ -18,26 +38,39 @@
 <script>
   import EOverlay from "../../../shared/components/EOverlay.vue";
   import ETitle from "../../../shared/components/ETitle.vue";
-  import { loadingMixin } from "@/mixins";
-  import { db } from "../../../firebase";
+  import { loadingMixin, routerMixin } from "@/mixins";
+  import {
+    getPacienteById,
+    fetchDocumentosByPaciente,
+  } from "../../../firebase/services/paciente";
   export default {
     components: { ETitle, EOverlay },
-    mixins: [loadingMixin],
+    mixins: [loadingMixin, routerMixin],
     data: () => ({
       paciente: {},
+      documentos: [],
     }),
+    computed: {
+      hasMoreThanOneDocumento() {
+        return this.documentos.length > 0;
+      },
+    },
+
     methods: {
-      async fetchPacienteData() {
-        const { id } = this.$route.params;
-        this.paciente = await db
-          .collection("pacientes")
-          .doc(id)
-          .get()
-          .then(snapshot => snapshot.data());
+      async loadPaciente() {
+        this.paciente = await getPacienteById(this.getRouteId);
+        this.getDocumentosByPaciente();
+      },
+      async getDocumentosByPaciente() {
+        this.loading = true;
+        const documentos = await fetchDocumentosByPaciente(this.getRouteId);
+        this.documentos = documentos;
+
+        this.loading = false;
       },
     },
     mounted() {
-      this.fetchPacienteData();
+      this.loadPaciente();
     },
   };
 </script>

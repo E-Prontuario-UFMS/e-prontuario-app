@@ -48,3 +48,15 @@ export async function fetchAcademicoByRga(rga) {
       }),
     );
 }
+
+export async function fetchAllAcademicos() {
+  return await db
+    .collection(USUARIOS)
+    .where("isAcademico", "==", true)
+    .get()
+    .then(snapshot =>
+      snapshot.docs.map(doc => {
+        return { ...doc.data(), id: doc.id };
+      }),
+    );
+}
