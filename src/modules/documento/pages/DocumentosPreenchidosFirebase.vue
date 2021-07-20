@@ -1,8 +1,30 @@
 <template>
   <v-container>
-    <div
-      style="border-bottom: 2px solid #1e4ffa;border-top: 2px solid #1e4ffa;"
-    >
+    <div class="table-border">
+      <v-row class="my-2">
+        <v-col sm="12" md="6">
+          <v-autocomplete
+            v-model="studentSearch"
+            label="Aluno"
+            :items="documentos"
+            item-text="nome"
+            dense
+            outlined
+            filled
+          />
+        </v-col>
+        <v-col sm="12" md="6">
+          <v-autocomplete
+            v-model="titleSearch"
+            dense
+            :items="documentos"
+            item-text="documento.titulo"
+            label="Titulo"
+            outlined
+            filled
+          />
+        </v-col>
+      </v-row>
       <v-data-table
         :headers="headers"
         :items="documentos"
@@ -75,8 +97,9 @@
     mixins: [routerMixin],
     data: () => ({
       loading: false,
-      documentosPreenchidos: [],
       documentos: [],
+      studentSearch: "",
+      titleSearch: "",
       headers: [
         {
           text: "Aluno",
@@ -103,7 +126,6 @@
       },
       async loadDocumentosPreenchidos() {
         this.documentos = await fetchDocumentosPreenchidos();
-        console.log(this.documentos);
       },
     },
     mounted() {
